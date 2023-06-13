@@ -1,0 +1,35 @@
+<div class="container">
+    <div class="sub-nav"></div>
+    <div class="search-product"></div>
+    <div class="add-new-product"></div>
+    <div class="list-products">
+        <table class="table table-hover">
+            <thead>
+                <tr>
+                  <th scope="col">#</th>
+                  <th scope="col">Name</th>
+                  <th scope="col">Price</th>
+                  <th scope="col">Category</th>
+                  <th scope="col">Description</th>
+                  <th scope="col">Status</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let product of products">
+                    <th scope="col">{{product.id}}</th>
+                    <th scope="col">{{product.name}}</th>
+                    <th scope="col">{{product.price}}</th>
+                    <th scope="col">{{product.category}}</th>
+                    <th scope="col">{{product.description}}</th>
+                    <th scope="col">{{product.status}}</th>
+                    <th scope="col text-center">
+                        <button type="button" class="btn btn-primary">Edit</button>
+                        <button type="button" class="btn btn-danger">Delete</button>
+                    </th>
+
+                </tr>
+              </tbody>
+
+        </table>
+    </div>
+</div>
