@@ -11,6 +11,8 @@ import { FooterComponent } from './layout/footer.component';
 import { FormComponent } from './form/form.component';
 import { ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
+import { authInterceptorProviders } from './helpers/auth.interceptor';
+import { RegisterComponent } from './register/register.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -18,7 +20,7 @@ import { HttpClientModule } from '@angular/common/http';
     ProductsComponent,
     LoginComponent,
     HeaderComponent,
-    FooterComponent, FormComponent,
+    FooterComponent, FormComponent, RegisterComponent,
 
   ],
   imports: [
@@ -27,7 +29,7 @@ import { HttpClientModule } from '@angular/common/http';
     ReactiveFormsModule,
     HttpClientModule
   ],
-  providers: [],
+  providers: [authInterceptorProviders],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
