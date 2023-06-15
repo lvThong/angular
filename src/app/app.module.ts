@@ -20,7 +20,9 @@ import { RegisterComponent } from './register/register.component';
     ProductsComponent,
     LoginComponent,
     HeaderComponent,
-    FooterComponent, FormComponent, RegisterComponent,
+    FooterComponent,
+    FormComponent, 
+    RegisterComponent,
 
   ],
   imports: [

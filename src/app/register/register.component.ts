@@ -1,16 +1,22 @@
 import { Component, OnInit } from "@angular/core";
 import { AuthService } from '../services/auth.service';
+import { FormControl, FormGroup } from "@angular/forms";
 @Component({
   selector: 'app-register',
   templateUrl: './register.component.html',
   styleUrls: ['./register.component.scss']
 })
 export class RegisterComponent implements OnInit{
-  form: any = {
-    username: null,
-    email: null,
-    password: null
-  };
+  registerForm = new FormGroup({
+    username: new FormControl(),
+    email: new FormControl(),
+    password: new FormControl(),
+    fullName: new FormControl(),
+    phoneNumber: new FormControl(),
+    role: new FormControl(),
+    
+    
+  });
   isSuccessful = false;
   isSignUpFailed = false;
   errorMessage = '';
@@ -21,7 +27,7 @@ export class RegisterComponent implements OnInit{
   }
 
   onSubmit(): void {
-    const { username, email, password } = this.form;
+    const { username, email, password } = this.registerForm.value;
 
     this.authService.register(username, email, password).subscribe(
       
