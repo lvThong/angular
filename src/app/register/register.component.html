@@ -1,30 +1,32 @@
 <div class="register-photo">
   <div class="form-container">
-    <div class="image-holder"></div>
     <form [formGroup]="registerForm" (ngSubmit)="onSubmit()">
       <h2 class="text-center"><strong>Sign up</strong></h2>
-      <div class="form-group"><input class="form-control" type="text" name="username" formControlName="username"
+      <div class="form-group"><input class="form-control" type="text" name="email" formControlName="email"
           placeholder="username">
       </div>
       <div class="form-group"><input class="form-control" type="password" name="password" formControlName="password"
-          placeholder="password">
+          placeholder="Password">
       </div>
       <div class="form-group"><input class="form-control" type="text" name="fullName" formControlName="fullName"
-          placeholder="">
+          placeholder="FullName">
       </div>
       <div class="form-group"><input class="form-control" type="text" name="address" formControlName="address"
-          placeholder="">
+          placeholder="Address">
       </div>
       <div class="form-group"><input class="form-control" type="text" name="phoneNumber" formControlName="phoneNumber"
-          placeholder="">
+          placeholder="PhoneNumber">
       </div>
-      <select class="custom-select">
+      <!-- <select class="custom-select">
         <option selected>Role</option>
         <option value="1">Admin</option>
         <option value="2">User</option>
 
+      </select> -->
+      <select class="form-control" name="role" formControlName="role">
+        <option *ngFor="let option of options" value="{{option.value}}">{{option.label}}</option>
       </select>
-      <div class="form-group"><button class="btn btn-success btn-block btn-info" type="submit">Sign up</button>
+      <div class="form-group my-5"><button class="btn btn-success btn-block btn-info" type="submit">Sign up</button>
       </div>
     </form>
   </div>

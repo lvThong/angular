@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms'
 // import { HttpClient } from '@angular/common/http';
+import { Router } from '@angular/router';
 import { AuthService } from '../services/auth.service';
 import { TokenStorageService } from '../services/token-storage.service';
 @Component({
@@ -20,7 +21,7 @@ export class LoginComponent implements OnInit {
     username: new FormControl(),
     password: new FormControl(),
   });
-  constructor(private authService: AuthService, private tokenStorage: TokenStorageService) {
+  constructor(private authService: AuthService, private tokenStorage: TokenStorageService, private router: Router) {
     
    }
 
@@ -35,14 +36,19 @@ export class LoginComponent implements OnInit {
   onSubmit(): void {
     const { username, password } = this.formLogin.value;
     this.authService.login(username , password).subscribe(
-      data => {
-        this.tokenStorage.saveToken(data.data.access_token);
-        this.tokenStorage.saveUser(data.data.user);
-
-        this.isLoginFailed = false;
-        this.isLoggedIn = true;
-        this.roles = this.tokenStorage.getUser().roles;
-        // this.reloadPage();
+      res => {
+        if (res.status === 'success') {
+          this.tokenStorage.saveToken(res.data.access_token);
+          this.tokenStorage.saveUser(res.data.user);
+  
+          this.isLoginFailed = false;
+          this.isLoggedIn = true;
+          this.roles = this.tokenStorage.getUser().roles;
+          // this.reloadPage();
+          this.router.navigate(['/']);
+        } else {
+          console.log('Thoong tin sai')
+        }
       },
       err => {
         this.errorMessage = err.error.message;
