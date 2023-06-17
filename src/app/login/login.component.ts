@@ -15,6 +15,7 @@ export class LoginComponent implements OnInit {
   isLoggedIn = false;
   isLoginFailed = false;
   errorMessage = '';
+  
   roles: string[] = [];
 
   formLogin = new FormGroup({
