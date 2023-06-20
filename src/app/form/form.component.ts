@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-
+import { ProductService } from '../services/product.service';
 @Component({
   selector: 'app-form',
   templateUrl: './form.component.html',
@@ -7,4 +7,12 @@ import { Component } from '@angular/core';
 })
 export class FormComponent {
 
+  constructor(private productService: ProductService) {}
+   
+  ngOnInit() { this.getProducts(); }
+
+  getProducts() {
+   let listProducts = this.productService.getListProducts();
+   console.log(listProducts);
+  }
 }
