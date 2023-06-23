@@ -14,6 +14,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { authInterceptorProviders } from './helpers/auth.interceptor';
 import { RegisterComponent } from './register/register.component';
 import { ShowAuthedDirective } from './show-authed.directive';
+import { EditProductComponent } from './edit-product/edit-product.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -23,7 +24,7 @@ import { ShowAuthedDirective } from './show-authed.directive';
     HeaderComponent,
     FooterComponent,
     FormComponent, 
-    RegisterComponent, ShowAuthedDirective,
+    RegisterComponent, ShowAuthedDirective, EditProductComponent,
 
   ],
   imports: [

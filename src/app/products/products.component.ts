@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { ProductService } from '../services/product.service';
 import { CategoryService } from '../services/category.service';
 import { Router } from '@angular/router';
+import { FormBuilder, FormGroup, ReactiveFormsModule } from '@angular/forms';
 @Component({
   selector: 'app-products',
   templateUrl: './products.component.html',
@@ -11,7 +12,12 @@ export class ProductsComponent {
 
   products: any;
   categories: any;
-  constructor(private productService: ProductService, private categoryService: CategoryService, private router: Router) { }
+
+  constructor(
+    private productService: ProductService, 
+    private categoryService: CategoryService, 
+    private router: Router,
+    ) { }
 
   ngOnInit() {
     // this.getCategories();
@@ -42,6 +48,9 @@ export class ProductsComponent {
 
     //  let listProducts = this.productService.getListProducts();
     //  console.log(listProducts);
+  }
+  updateProduct() {
+
   }
   deleteProduct(id: number) {
       this.productService.deleteProduct(id)
