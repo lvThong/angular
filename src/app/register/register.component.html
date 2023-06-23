@@ -17,14 +17,9 @@
       <div class="form-group"><input class="form-control" type="text" name="phoneNumber" formControlName="phoneNumber"
           placeholder="PhoneNumber">
       </div>
-      <!-- <select class="custom-select">
-        <option selected>Role</option>
-        <option value="1">Admin</option>
-        <option value="2">User</option>
-
-      </select> -->
-      <select class="form-control" name="role" formControlName="role">
-        <option *ngFor="let option of options" value="{{option.value}}">{{option.label}}</option>
+      <select class="form-control" formControlName="role">
+        <option [ngValue]="null" disabled>Choose type user</option>
+        <option *ngFor="let option of options" [ngValue]="option.value" [selected]="option.value === 1">{{option.label}}</option>
       </select>
       <div class="form-group my-5"><button class="btn btn-success btn-block btn-info" type="submit">Sign up</button>
       </div>

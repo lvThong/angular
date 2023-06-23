@@ -20,10 +20,10 @@ const routes: Routes = [
     path: 'product',
     component: ProductsComponent
   },
-  {
-    path: 'product/edit',
-    component: FormComponent
-  },
+  // {
+  //   path: 'product/edit',
+  //   component: EditProductComponent
+  // },
   {
     path: 'register',
     component: RegisterComponent

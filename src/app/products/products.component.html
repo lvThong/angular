@@ -26,13 +26,13 @@
                     <th scope="col">{{product.description}}</th>
                    <!-- <th scope="col">{{product.status}}</th> -->
                     <th scope="col text-center">
-                        <button type="button" class="btn btn-primary" routerLink="/product/edit">Edit</button>
+                        <button type="button" class="btn btn-primary" (click)="editProduct(product)">Edit</button>
                         <button type="button" class="btn btn-danger"  (click)="deleteProduct(product.id)">Delete</button>
                     </th>
 
                 </tr>
               </tbody>
-
         </table>
+        <!-- <app-edit-product></app-edit-product> -->
     </div>
 </div>

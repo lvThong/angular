@@ -1,23 +1,26 @@
-import { Component } from '@angular/core';
+import { Component, ViewChild } from '@angular/core';
 import { ProductService } from '../services/product.service';
 import { CategoryService } from '../services/category.service';
 import { Router } from '@angular/router';
 import { FormBuilder, FormGroup, ReactiveFormsModule } from '@angular/forms';
+import { EditProductComponent } from '../edit-product/edit-product.component';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 @Component({
   selector: 'app-products',
   templateUrl: './products.component.html',
   styleUrls: ['./products.component.scss']
 })
 export class ProductsComponent {
-
+  @ViewChild(EditProductComponent) editProductComponent: any;
   products: any;
   categories: any;
 
   constructor(
-    private productService: ProductService, 
-    private categoryService: CategoryService, 
+    private productService: ProductService,
+    private categoryService: CategoryService,
+    private modalService: NgbModal,
     private router: Router,
-    ) { }
+  ) { }
 
   ngOnInit() {
     // this.getCategories();
@@ -41,19 +44,16 @@ export class ProductsComponent {
         if (res.status === 'success') {
           this.products = res.data;
         } else {
-          
+
         }
-      
+
       });
 
     //  let listProducts = this.productService.getListProducts();
     //  console.log(listProducts);
   }
-  updateProduct() {
-
-  }
   deleteProduct(id: number) {
-      this.productService.deleteProduct(id)
+    this.productService.deleteProduct(id)
       .subscribe(
         res => {
           if (res.status === 'success') {
@@ -61,9 +61,20 @@ export class ProductsComponent {
             console.log('delete success');
             // this.router.navigate(['/product']);   
           }
-          
-          
+
+
         }
-      )
+      );
+  }
+  editProduct(product: any) {
+    // this.editProductComponent.open(product);
+    const modalRef = this.modalService.open(EditProductComponent, { size: 'lg', backdrop: "static" });
+
+    modalRef.componentInstance.item = product;
+    modalRef.result.then((result) => {
+      // this.closeResult = `Closed with: ${result}`;
+    }, (reason) => {
+      // this.closeResult = `Dismissed ${this.getDismissReason(reason)}`;
+    });
   }
 }

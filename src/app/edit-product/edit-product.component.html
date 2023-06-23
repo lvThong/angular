@@ -1,0 +1,41 @@
+<div class="modal-header">
+    <div class="title text-center ">
+        <h4>Edit Product</h4>
+    </div>
+    <button type="button" class="close" aria-label="Close" (click)="activeModal.close('Close click')" >
+      <span aria-hidden="true">X</span>
+    </button>
+  </div>
+  <div class="modal-body">
+ 
+    <div class="information-form"></div>
+    <form [formGroup]="editForm">
+        <div class="form-group">
+            <label for="formControlInput1" placeholder="{}">Name</label>
+            <input type="text" class="form-control" name="name" formControlName="name" value="name">
+        </div>
+        <div class="form-group">
+            <label for="formControlInput2">Price</label>
+            <input type="text" class="form-control" name="price" formControlName="price" value="price" formControlName="price">
+        </div>
+        <select class="form-control" name="category" formControlName="category">
+            <option *ngFor="let category of categories" value="category.id">{{category.name}}</option>
+          </select>
+        <div class="form-group">
+            <label for="formControlTextarea1">Description</label>
+            <textarea class="form-control" rows="3" name="description" formControlName="description" value="description"></textarea>
+        </div>
+        <div class="form-group">
+            <label for="formControlInput3">Image</label>
+            <input type="text" class="form-control" name="image" value="image" formControlName="image">
+        </div>
+    </form>
+   
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-primary btn-lg active" (click)="updateProduct()">Apply</button>
+    <!-- <a href="#" class="btn btn-primary btn-lg active" role="button" aria-pressed="true">Apply</a> -->
+    <!-- <button (click)="testNow()">Test ngay</button> -->
+    <!-- <a href="#" class="btn btn-secondary btn-lg active float-right" role="button" aria-pressed="true">Cancel</a> -->
+    <button type="button" class="btn btn-secondary btn-lg active float-right" (click)="activeModal.close('Close click')">Cancel</button>
+  </div>

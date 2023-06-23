@@ -15,6 +15,7 @@ import { authInterceptorProviders } from './helpers/auth.interceptor';
 import { RegisterComponent } from './register/register.component';
 import { ShowAuthedDirective } from './show-authed.directive';
 import { EditProductComponent } from './edit-product/edit-product.component';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 @NgModule({
   declarations: [
     AppComponent,
@@ -23,8 +24,11 @@ import { EditProductComponent } from './edit-product/edit-product.component';
     LoginComponent,
     HeaderComponent,
     FooterComponent,
-    FormComponent, 
-    RegisterComponent, ShowAuthedDirective, EditProductComponent,
+    FormComponent,
+    EditProductComponent,
+    RegisterComponent, 
+    ShowAuthedDirective, 
+    EditProductComponent,
 
   ],
   imports: [
@@ -32,7 +36,8 @@ import { EditProductComponent } from './edit-product/edit-product.component';
     AppRoutingModule,
     ReactiveFormsModule,
     HttpClientModule,
-    FormsModule
+    FormsModule,
+    NgbModule
   ],
   providers: [authInterceptorProviders],
   bootstrap: [AppComponent]
