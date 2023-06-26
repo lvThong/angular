@@ -69,7 +69,7 @@ export class ProductsComponent {
   editProduct(product: any) {
     // this.editProductComponent.open(product);
     const modalRef = this.modalService.open(EditProductComponent, { size: 'lg', backdrop: "static" });
-
+    modalRef.componentInstance.title = 'Edit Product';
     modalRef.componentInstance.item = product;
     modalRef.result.then((result) => {
       // this.closeResult = `Closed with: ${result}`;
@@ -77,4 +77,17 @@ export class ProductsComponent {
       // this.closeResult = `Dismissed ${this.getDismissReason(reason)}`;
     });
   }
+
+  createProduct() {
+    const modalRef = this.modalService.open(EditProductComponent, { size: 'lg', backdrop: "static" });
+    modalRef.componentInstance.title = 'Add New Product';
+    modalRef.result.then(
+      result =>  {
+
+      }, reason => {
+
+      }
+    )
+  }
+  
 }

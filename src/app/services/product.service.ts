@@ -19,6 +19,7 @@ export class ProductService {
         return this.http.post(AUTH_API + '/create-product', {
             name,
             category_id,
+            image,
             description,
             price
         }, httpOptions);
@@ -32,7 +33,8 @@ export class ProductService {
             name,
             category_id,
             description,
-            price
+            price,
+            image
         }, httpOptions);
     }
     deleteProduct(id: number): Observable<any> {

@@ -3,7 +3,7 @@
     <div class="search-product"></div>
     <div class="title">PRODUCTS</div>
     <div class="add-new-product my-5">
-      <button type="button" class="btn btn-primary">ADD NEW PRODUCT</button>
+      <button type="button" class="btn btn-primary" (click)="createProduct()">ADD NEW PRODUCT</button>
     </div>
     <div class="list-products">
         <table class="table table-hover">
@@ -35,4 +35,6 @@
         </table>
         <!-- <app-edit-product></app-edit-product> -->
     </div>
+    <app-spinner></app-spinner>
+
 </div>

@@ -10,12 +10,14 @@ import { HeaderComponent } from './layout/header.component';
 import { FooterComponent } from './layout/footer.component';
 import { FormComponent } from './form/form.component';
 import { ReactiveFormsModule } from '@angular/forms';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { authInterceptorProviders } from './helpers/auth.interceptor';
 import { RegisterComponent } from './register/register.component';
 import { ShowAuthedDirective } from './show-authed.directive';
 import { EditProductComponent } from './edit-product/edit-product.component';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { SpinnerComponent } from './spinner/spinner.component';
+import { loadingInterceptorProviders } from './helpers/loading.interceptor';
 @NgModule({
   declarations: [
     AppComponent,
@@ -28,7 +30,8 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
     EditProductComponent,
     RegisterComponent, 
     ShowAuthedDirective, 
-    EditProductComponent,
+    EditProductComponent, 
+    SpinnerComponent,
 
   ],
   imports: [
@@ -39,7 +42,11 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
     FormsModule,
     NgbModule
   ],
-  providers: [authInterceptorProviders],
+  providers: [
+    authInterceptorProviders,
+    loadingInterceptorProviders
+    // {provide: HTTP_INTERCEPTORS, useClass: LoadingInterceptor, multi: true}
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
