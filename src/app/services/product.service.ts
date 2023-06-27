@@ -12,8 +12,8 @@ const httpOptions = {
 export class ProductService {
     // listProducts: BehaviorSubject<any> = new BehaviorSubject<any>(null);
     constructor(private http: HttpClient) { };
-    getListProducts(): Observable<any> {
-        return this.http.get(AUTH_API + '/product', httpOptions);
+    getListProducts(page: number, limit: number): Observable<any> {
+        return this.http.get(AUTH_API + `/product?page=${page}&limit=${limit}`);
     }
     addNewProduct(name: string, category_id: number, image: string, description: string, price: number): Observable<any> {
         return this.http.post(AUTH_API + '/create-product', {
@@ -38,8 +38,11 @@ export class ProductService {
         }, httpOptions);
     }
     deleteProduct(id: number): Observable<any> {
-        console.log('Logger-httpOptions: ' + httpOptions);
-
+       
         return this.http.delete(AUTH_API + '/delete-product', { headers: new HttpHeaders({ 'Content-Type': 'application/json' }), body: { id: id } });
+    }
+    findProduct(id: number, name: string, category: number, page: number, limit: number): Observable<any> {
+        console.log(id,name, category, page, limit);
+        return this.http.get(AUTH_API + `/product?page=${page}&limit=${limit}&id=${id}&name=${name}&category=${category}`, httpOptions)
     }
 }

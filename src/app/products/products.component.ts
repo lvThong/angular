@@ -16,17 +16,37 @@ export class ProductsComponent {
   categories: any;
   page: number = 1;
   count: number = 0;
-  tableSize: number = 5;
+  limit: number = 5;
+  filterForm: any;
   constructor(
     private productService: ProductService,
     private categoryService: CategoryService,
     private modalService: NgbModal,
     private router: Router,
+    private formBuilder:FormBuilder
   ) { }
 
   ngOnInit() {
-    // this.getCategories();
-    this.getProducts();
+   this.getCategories();
+    this.getProducts(this.page, this.limit);
+    this.createForm();
+  
+  }
+  getCategories() {
+    this.categoryService.getListCategories().subscribe(
+      res => {
+        if (res.status === 'success') {
+          this.categories = res.data;
+        }
+      }
+    )
+  }
+  createForm() {
+      this.filterForm = this.formBuilder.group({
+          id: [null],
+          name: [null],
+          category: [null],
+      });
   }
   // getCategories() {
   //   this.categoryService.getListCategories().subscribe(
@@ -39,14 +59,14 @@ export class ProductsComponent {
   //   );
 
   // }
-  getProducts() {
-    this.productService.getListProducts()
+  getProducts(page: number, limit: number) {
+    this.productService.getListProducts(page, limit)
       .subscribe((res) => {
         if (res.status === 'success') {
-          this.products = res.data;
-        } else {
-
-        }
+          this.products = res.data.data;
+          this.count = res.data.total;
+          console.log('Log products: ', this.products);
+        } 
 
       });
 
@@ -58,7 +78,7 @@ export class ProductsComponent {
       .subscribe(
         res => {
           if (res.status === 'success') {
-            this.getProducts();
+            this.getProducts(this.page, this.limit);
             console.log('delete success');
             // this.router.navigate(['/product']);   
           }
@@ -91,7 +111,22 @@ export class ProductsComponent {
     )
   }
   handlePage(event: any) {
+      this.page = event;
+      this.getProducts(this.page, this.limit);
+  }
+  findProduct(){
+      const {id, name, category} = this.filterForm.value;
+      this.productService.findProduct(id, name, category, this.page, this.limit).subscribe(
+        (res) => {
+          if (res.status === 'success') {
+              this.products = res.data.data;
+           
+            // this.router.navigate(['/product']);   
+          }
 
+
+        }
+      )
   }
   
 }
