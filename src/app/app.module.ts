@@ -18,6 +18,7 @@ import { EditProductComponent } from './edit-product/edit-product.component';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { SpinnerComponent } from './spinner/spinner.component';
 import { loadingInterceptorProviders } from './helpers/loading.interceptor';
+import { NgxPaginationModule } from 'ngx-pagination';
 @NgModule({
   declarations: [
     AppComponent,
@@ -40,7 +41,8 @@ import { loadingInterceptorProviders } from './helpers/loading.interceptor';
     ReactiveFormsModule,
     HttpClientModule,
     FormsModule,
-    NgbModule
+    NgbModule,
+    NgxPaginationModule
   ],
   providers: [
     authInterceptorProviders,

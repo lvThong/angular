@@ -1,40 +1,44 @@
 <div class="container my-5">
-    <div class="sub-nav"></div>
-    <div class="search-product"></div>
-    <div class="title">PRODUCTS</div>
-    <div class="add-new-product my-5">
-      <button type="button" class="btn btn-primary" (click)="createProduct()">ADD NEW PRODUCT</button>
-    </div>
-    <div class="list-products">
-        <table class="table table-hover">
-            <thead>
-                <tr>
-                  <th scope="col">#</th>
-                  <th scope="col">Name</th>
-                  <th scope="col">Price</th>
-                  <th scope="col">Category</th>
-                  <th scope="col">Description</th>
-                </tr>
-              </thead>
-              
-              <tbody>
-                <tr *ngFor="let product of products">
-                    <th scope="col">{{product.id}}</th>
-                    <th scope="col">{{product.name}}</th>
-                    <th scope="col">{{product.price}}</th>
-                    <th scope="col">{{product.category_name}}</th>
-                    <th scope="col">{{product.description}}</th>
-                   <!-- <th scope="col">{{product.status}}</th> -->
-                    <th scope="col text-center">
-                        <button type="button" class="btn btn-primary" (click)="editProduct(product)">Edit</button>
-                        <button type="button" class="btn btn-danger"  (click)="deleteProduct(product.id)">Delete</button>
-                    </th>
+  <div class="sub-nav"></div>
+  <div class="search-product"></div>
+  <div class="title">PRODUCTS</div>
+  <div class="add-new-product my-5">
+    <button type="button" class="btn btn-primary" (click)="createProduct()">ADD NEW PRODUCT</button>
+  </div>
+  <div class="list-products">
+    <table class="table table-hover">
+      <thead>
+        <tr>
+          <th scope="col">#</th>
+          <th scope="col">Name</th>
+          <th scope="col">Price</th>
+          <th scope="col">Category</th>
+          <th scope="col">Description</th>
+        </tr>
+      </thead>
 
-                </tr>
-              </tbody>
-        </table>
-        <!-- <app-edit-product></app-edit-product> -->
+      <tbody>
+        <tr *ngFor="let product of products | paginate: {  itemsPerPage: tableSize, currentPage: page, totalItems: count}; let i = index">
+          <th scope="col">{{product.id}}</th>
+          <th scope="col">{{product.name}}</th>
+          <th scope="col">{{product.price}}</th>
+          <th scope="col">{{product.category_name}}</th>
+          <th scope="col">{{product.description}}</th>
+          <!-- <th scope="col">{{product.status}}</th> -->
+          <th scope="col text-center">
+            <button type="button" class="btn btn-primary" (click)="editProduct(product)">Edit</button>
+            <button type="button" class="btn btn-danger" (click)="deleteProduct(product.id)">Delete</button>
+          </th>
+
+        </tr>
+      </tbody>
+    </table>
+    <div class="d-flex justify-content-center">
+      <pagination-controls previousLabel="Prev" nextLabel="Next" (pageChange)="handlePage($event)">
+      </pagination-controls>
     </div>
-    <app-spinner></app-spinner>
+    <!-- <app-edit-product></app-edit-product> -->
+  </div>
+  <app-spinner></app-spinner>
 
 </div>

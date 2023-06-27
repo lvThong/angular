@@ -14,7 +14,9 @@ export class ProductsComponent {
   @ViewChild(EditProductComponent) editProductComponent: any;
   products: any;
   categories: any;
-
+  page: number = 1;
+  count: number = 0;
+  tableSize: number = 5;
   constructor(
     private productService: ProductService,
     private categoryService: CategoryService,
@@ -40,7 +42,6 @@ export class ProductsComponent {
   getProducts() {
     this.productService.getListProducts()
       .subscribe((res) => {
-        console.log(res);
         if (res.status === 'success') {
           this.products = res.data;
         } else {
@@ -88,6 +89,9 @@ export class ProductsComponent {
 
       }
     )
+  }
+  handlePage(event: any) {
+
   }
   
 }

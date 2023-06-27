@@ -61,7 +61,7 @@ export class EditProductComponent {
     // });
     this.editForm = this.formBuilder.group({
       id: [this.item ? this.item.id : null, Validators.required],
-      name: [this.item  ? this.item.name : null, Validators.required, Validators],
+      name: [this.item  ? this.item.name : null, Validators.required],
       category: [this.item  ? this.item.category_id: null, Validators.required],
       price: [this.item  ? this.item.price : null, Validators.required],
       description: [this.item ? this.item.description: null, Validators.required],
@@ -74,18 +74,20 @@ export class EditProductComponent {
 
   handleCancel() {
     this.submitted = false;
+    // this.editForm.reset();
     this.activeModal.close('Close click');
   }
   updateProduct() {
     this.submitted = true;
       const {id, name, description, price, image, category} = this.editForm.value;
+      console.log('Logger form: '+ this.editForm.invalid);
       if (this.editForm.invalid) {
         return ;
       }
       this.productService.updateProduct(id, name, category,image,description, price).subscribe(
         res => {
             if (res.status === 'success') {
-              console.log('updated product ');
+        
        
               this.activeModal.close(true);
               window.location.reload();
