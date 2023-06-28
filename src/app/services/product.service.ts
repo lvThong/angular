@@ -42,7 +42,45 @@ export class ProductService {
         return this.http.delete(AUTH_API + '/delete-product', { headers: new HttpHeaders({ 'Content-Type': 'application/json' }), body: { id: id } });
     }
     findProduct(id: number, name: string, category: number, page: number, limit: number): Observable<any> {
-        console.log(id,name, category, page, limit);
-        return this.http.get(AUTH_API + `/product?page=${page}&limit=${limit}&id=${id}&name=${name}&category=${category}`, httpOptions)
+        const params = {
+            id: id,
+            name: name,
+            category: category,
+            page: page,
+            limit: limit
+        }
+        // console.log(id,name, category, page, limit);
+        console.log(`${AUTH_API}/product${buildQueryString(params)}`);
+      
+        return this.http.get(`${AUTH_API}/product${buildQueryString(params)}`, httpOptions);
+        // return this.http.get(AUTH_API + `/product?page=${page}&limit=${limit}&id=${id}&name=${name}&category=${category}`, httpOptions);
     }
 }
+
+
+
+function buildQueryString(params: any) {
+    if (!params) {
+        return ;
+    }
+    let resultString ='?';
+    const keys = Object.keys(params);
+     let count = 0;
+    for (let key of keys) {
+        if (params[key]) {
+            if (count < 1) {
+                resultString = resultString + `${key}=${params[key]}`;
+        
+               } else{
+                resultString = resultString +`&${key}=${params[key]}`;
+               }
+               count++;      
+        }
+      
+    }
+    return resultString;
+
+}
+
+// ?key=value
+// &key=value
