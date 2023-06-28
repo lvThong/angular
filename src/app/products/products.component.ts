@@ -5,6 +5,7 @@ import { Router } from '@angular/router';
 import { FormBuilder, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { EditProductComponent } from '../edit-product/edit-product.component';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { NotificationService } from '../services/notification.service';
 @Component({
   selector: 'app-products',
   templateUrl: './products.component.html',
@@ -23,13 +24,15 @@ export class ProductsComponent {
     private categoryService: CategoryService,
     private modalService: NgbModal,
     private router: Router,
-    private formBuilder:FormBuilder
+    private formBuilder:FormBuilder,
+    private notification: NotificationService,
   ) { }
 
   ngOnInit() {
    this.getCategories();
+   this.createForm();
     this.getProducts(this.page, this.limit);
-    this.createForm();
+ 
   
   }
   getCategories() {
@@ -60,7 +63,8 @@ export class ProductsComponent {
 
   // }
   getProducts(page: number, limit: number) {
-    this.productService.getListProducts(page, limit)
+    const {id, name, category} = this.filterForm.value;
+    this.productService.findProduct(id, name, category, this.page,this.limit)
       .subscribe((res) => {
         if (res.status === 'success') {
           this.products = res.data.data;
@@ -79,8 +83,10 @@ export class ProductsComponent {
         res => {
           if (res.status === 'success') {
             this.getProducts(this.page, this.limit);
-            console.log('delete success');
-            // this.router.navigate(['/product']);   
+          // alert('delete success');
+            this.notification.showSuccess('delete sucess', 'Product');
+            // this.router.navigate(['/product']); 
+
           }
 
 
@@ -120,7 +126,7 @@ export class ProductsComponent {
         (res) => {
           if (res.status === 'success') {
               this.products = res.data.data;
-           
+              this.count = res.data.total;
             // this.router.navigate(['/product']);   
           }
 

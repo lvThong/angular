@@ -1,23 +1,35 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
-
-const API_URL = 'http://localhost:8000/api/test/';
-
+import { CommonService } from './common.service';
+const API_URL = 'http://localhost:8000/api';
+const httpOptions = {
+    headers: new HttpHeaders({ 'Content-Type': 'application/json' })
+}
 @Injectable({
     providedIn: 'root'
 })
 export class UserService {
-    constructor(private http: HttpClient) { }
+    constructor(
+        private http: HttpClient,
+        private commonService: CommonService
+    ) { }
 
-    getPublicContent(): Observable<any> {
-        return this.http.get(API_URL + 'all', { responseType: 'text' });
-    }
+    listUsers(page: number, limit: number):Observable <any> {
+        let params = {
 
-    getUserBoard(): Observable<any> {
-        return this.http.get(API_URL + 'user', { responseType: 'text' });
+        };
+        return this.http.get(`${API_URL}/user${this.commonService.buildQueryString(params)}`, httpOptions);
     }
-    getAdminBoard(): Observable<any> {
-        return this.http.get(API_URL + 'admin', { responseType: 'text' });
+    createUser():Observable <any> {
+        let params = {};
+        return this.http.post(`${API_URL}/user`, params, httpOptions);
     }
-}
+    updateUser():Observable <any> {
+        let params = {};
+        return this.http.put(`${API_URL}/user`,params, httpOptions);
+    }
+    deleteUser(id: string):Observable <any> {
+        return this.http.delete(`${API_URL}/user`, httpOptions);
+    }
+ }

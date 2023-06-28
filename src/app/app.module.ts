@@ -19,6 +19,10 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { SpinnerComponent } from './spinner/spinner.component';
 import { loadingInterceptorProviders } from './helpers/loading.interceptor';
 import { NgxPaginationModule } from 'ngx-pagination';
+import { ToastrModule } from 'ngx-toastr';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { UserComponent } from './user/user.component';
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -32,7 +36,7 @@ import { NgxPaginationModule } from 'ngx-pagination';
     RegisterComponent, 
     ShowAuthedDirective, 
     EditProductComponent, 
-    SpinnerComponent,
+    SpinnerComponent, UserComponent,
 
   ],
   imports: [
@@ -42,11 +46,13 @@ import { NgxPaginationModule } from 'ngx-pagination';
     HttpClientModule,
     FormsModule,
     NgbModule,
-    NgxPaginationModule
+    NgxPaginationModule,
+    BrowserAnimationsModule,
+    ToastrModule.forRoot()
   ],
   providers: [
     authInterceptorProviders,
-    loadingInterceptorProviders
+    loadingInterceptorProviders,
     // {provide: HTTP_INTERCEPTORS, useClass: LoadingInterceptor, multi: true}
   ],
   bootstrap: [AppComponent]

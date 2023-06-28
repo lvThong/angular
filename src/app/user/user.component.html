@@ -1,0 +1,68 @@
+<div class="container my-5">
+    <div class="sub-nav"></div>
+    <div class="search-user"></div>
+    <div class="title">USER</div>
+    <div class="add-new-user my-5">
+  
+  
+        <button type="button" class="btn btn-primary my-5" (click)="createUser()">ADD NEW USER</button>
+      <!-- <div class="w-80">
+        <form class="d-flex flex-row mb-3" [formGroup]="filterForm" >
+          <div class="p-2">
+            <input type="text" class="form-control" formControlName="id" placeholder="Id">
+          </div>
+          <div class="p-2">
+            <input type="text" class="form-control" formControlName="name" placeholder="Name">
+          </div>
+          <div class="p-2">
+            <select class="form-control" formControlName="category">
+              <option value="null" disabled> Category </option>
+              <option *ngFor="let category of categories" value="{{category.id}}">{{category.name}}</option>
+            </select>
+          </div>
+          <div class="p-2">
+            <button type="button" class="btn btn-primary mb-3" (click)="finduser()" >Search</button>
+          </div>
+        </form>
+  
+      </div>
+    </div> -->
+    <div class="list-users">
+      <table class="table table-hover">
+        <thead>
+          <tr>
+            <th scope="col">#</th>
+            <th scope="col">Email</th>
+            <th scope="col">FullName</th>
+            <th scope="col">PhoneNumber</th>
+            <th scope="col">Address</th>
+            <th scope="col">Role</th>
+
+          </tr>
+        </thead>
+  
+        <tbody>
+          <tr
+            *ngFor="let user of users | paginate: {  itemsPerPage: limit, currentPage: page, totalItems: count}; let i = index">
+            <th scope="col">{{user.id}}</th>
+            <th scope="col">{{user.email}}</th>
+            <th scope="col">{{user.fullName}}</th>
+            <th scope="col">{{user.phoneNumber}}</th>
+            <th scope="col">{{user.address}}</th>
+            <th scope="col">{{user.role_name}}</th>
+            <th scope="col text-center">
+              <button type="button" class="btn btn-primary" (click)="editUser(user)">Edit</button>
+              <button type="button" class="btn btn-danger" (click)="deleteUser(user.id)">Delete</button>
+            </th>
+  
+          </tr>
+        </tbody>
+      </table>
+      <div class="d-flex justify-content-center">
+        <pagination-controls previousLabel="Prev" nextLabel="Next" (pageChange)="handlePage($event)">
+        </pagination-controls>
+      </div>
+    </div>
+    <app-spinner></app-spinner>
+  
+  </div>
