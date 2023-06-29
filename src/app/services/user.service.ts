@@ -15,9 +15,10 @@ export class UserService {
         private commonService: CommonService
     ) { }
 
-    listUsers(page: number, limit: number):Observable <any> {
+    listUser(page: number, limit: number, ):Observable <any> {
         let params = {
-
+            page: page,
+            limit: limit
         };
         return this.http.get(`${API_URL}/user${this.commonService.buildQueryString(params)}`, httpOptions);
     }
@@ -31,5 +32,9 @@ export class UserService {
     }
     deleteUser(id: string):Observable <any> {
         return this.http.delete(`${API_URL}/user`, httpOptions);
+    }   
+    getRole(): Observable <any> {
+        return this.http.get(`${API_URL}/get-role`, httpOptions);
     }
+    
  }

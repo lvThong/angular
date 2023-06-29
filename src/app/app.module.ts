@@ -22,6 +22,7 @@ import { NgxPaginationModule } from 'ngx-pagination';
 import { ToastrModule } from 'ngx-toastr';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { UserComponent } from './user/user.component';
+import { PopupComponent } from './popup/popup.component';
 
 @NgModule({
   declarations: [
@@ -36,7 +37,7 @@ import { UserComponent } from './user/user.component';
     RegisterComponent, 
     ShowAuthedDirective, 
     EditProductComponent, 
-    SpinnerComponent, UserComponent,
+    SpinnerComponent, UserComponent, PopupComponent,
 
   ],
   imports: [

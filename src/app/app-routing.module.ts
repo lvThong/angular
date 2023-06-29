@@ -36,7 +36,11 @@ const routes: Routes = [
   {
     path: 'user',
     component: UserComponent
-  }
+  }, 
+  // {
+  //   path: 'customer',
+  //   component: CustomerComponent
+  // }
 ];
 
 @NgModule({

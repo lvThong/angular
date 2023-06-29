@@ -6,7 +6,7 @@
   
   
         <button type="button" class="btn btn-primary my-5" (click)="createUser()">ADD NEW USER</button>
-      <!-- <div class="w-80">
+      <div class="w-80">
         <form class="d-flex flex-row mb-3" [formGroup]="filterForm" >
           <div class="p-2">
             <input type="text" class="form-control" formControlName="id" placeholder="Id">
@@ -15,18 +15,24 @@
             <input type="text" class="form-control" formControlName="name" placeholder="Name">
           </div>
           <div class="p-2">
-            <select class="form-control" formControlName="category">
-              <option value="null" disabled> Category </option>
-              <option *ngFor="let category of categories" value="{{category.id}}">{{category.name}}</option>
+            <input type="text" class="form-control" formControlName="phoneNumber" placeholder="Phone">
+          </div>
+          <div class="p-2">
+            <input type="text" class="form-control" formControlName="address" placeholder="Address">
+          </div>
+          <div class="p-2">
+            <select class="form-control" formControlName="role">
+              <option value="null" > Role </option>
+              <option *ngFor="let role of roles" value="{{role.id}}">{{role.name}}</option>
             </select>
           </div>
           <div class="p-2">
-            <button type="button" class="btn btn-primary mb-3" (click)="finduser()" >Search</button>
+            <button type="button" class="btn btn-primary mb-3" (click)="findUser()" >Search</button>
           </div>
         </form>
   
       </div>
-    </div> -->
+    </div>
     <div class="list-users">
       <table class="table table-hover">
         <thead>

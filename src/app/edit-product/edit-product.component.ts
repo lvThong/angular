@@ -94,7 +94,6 @@ export class EditProductComponent {
           this.activeModal.close(true);
           window.location.reload();
           this.notification.showSuccess( 'success','update product');
-          // this.router.navigate(['/product']);
         }
       }
     )
