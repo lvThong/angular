@@ -69,7 +69,6 @@ export class ProductsComponent {
         if (res.status === 'success') {
           this.products = res.data.data;
           this.count = res.data.total;
-          console.log('Log products: ', this.products);
         } 
 
       });

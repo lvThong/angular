@@ -3,6 +3,7 @@ import { UserService } from '../services/user.service';
 import { FormBuilder } from '@angular/forms';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { PopupComponent } from '../popup/popup.component';
+import { NotificationService } from '../services/notification.service';
 
 @Component({
   selector: 'app-user',
@@ -20,9 +21,10 @@ export class UserComponent {
   constructor(
     private userService: UserService,
     private formBuilder: FormBuilder,
-    private modalService: NgbModal
+    private modalService: NgbModal,
+    private notifi: NotificationService
   ) {
-  
+
   }
   ngOnInit() {
     this.getRole();
@@ -36,17 +38,19 @@ export class UserComponent {
       phoneNumber: [null],
       address: [null],
       role: [null]
-  });
+    });
   }
   getListUser() {
-  
-    this.userService.listUser(this.page, this.limit).subscribe(
+    let params = {
+      page: this.page,
+      limit: this.limit
+    }
+    this.userService.listUser(params).subscribe(
       res => {
-          if (res.status === 'success') {
-            this.users = res.data.data;
-            this.count = res.data.total;
-            
-          }
+        if (res.status === 'success') {
+          this.users = res.data.data;
+          this.count = res.data.total;
+        }
       }
     )
 
@@ -56,7 +60,7 @@ export class UserComponent {
       res => {
         if (res.status === 'success') {
           this.roles = res.data;
-  
+
         }
       }
     )
@@ -66,14 +70,32 @@ export class UserComponent {
     this.getListUser();
   }
   findUser() {
+    let { id, name, phoneNumber, address, role } = this.filterForm.value;
+    let params = {
+      page: this.page,
+      limit: this.limit,
+      id,
+      name,
+      phoneNumber,
+      address,
+      role
+    }
+    this.userService.listUser(params).subscribe(
+      res => {
+        if (res.status === 'success') {
+          this.users = res.data.data;
+          this.count = res.data.total;
 
+        }
+      }
+    )
   }
 
   createUser() {
-    const modalRef = this.modalService.open(PopupComponent,{ size: 'lg', backdrop: "static" });
+    const modalRef = this.modalService.open(PopupComponent, { size: 'lg', backdrop: "static" });
     modalRef.componentInstance.title = 'Add New User';
     modalRef.result.then(
-      result =>  {
+      result => {
 
       }, reason => {
 
@@ -81,12 +103,11 @@ export class UserComponent {
     )
   }
   editUser(user: any) {
-    const modalRef = this.modalService.open(PopupComponent,{ size: 'lg', backdrop: "static" });
+    const modalRef = this.modalService.open(PopupComponent, { size: 'lg', backdrop: "static" });
     modalRef.componentInstance.title = 'Edit User';
     modalRef.componentInstance.data = user;
-    console.log(123);
     modalRef.result.then(
-      result =>  {
+      result => {
 
       }, reason => {
 
@@ -95,8 +116,17 @@ export class UserComponent {
 
   }
   deleteUser(id: number) {
-
+    this.userService.deleteUser(id).subscribe(
+      res => {
+        if (res.status === 'success') {
+          window.location.reload();
+          this.notifi.showSuccess('success', 'deleted user');
+        } else {
+          this.notifi.showError('failure', 'deleted user');
+        }
+      }
+    )
   }
-  
-  
+
+
 }

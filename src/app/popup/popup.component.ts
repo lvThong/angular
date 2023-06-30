@@ -25,7 +25,6 @@ export class PopupComponent {
   ngOnInit() {
     this.getRole();
     this.createForm();
-    console.log('data :',this.data);
   }
   getRole() {
     this.userService.getRole().subscribe(
@@ -47,16 +46,50 @@ export class PopupComponent {
       role: [this.data ? this.data.role : null, Validators.required],
     });
   }
-  f() {
+  get f() {
     return this.userForm.controls;
   }
   updateUser() {
- 
+    this.submitted = true;
+    let {id, email, fullName, address, phoneNumber, role} = this.userForm.value;
+    if (this.userForm.invalid) {
+      return;
+    }
+    this.userService.updateUser(id, email, fullName, address, phoneNumber, role).subscribe(
+      res => {
+        if (res.status === 'success') {
+          this.activeModal.close(true);
+          window.location.reload();
+          this.notification.showSuccess('success','updaded data');
+
+          
+        } else {
+          this.notification.showError('failure', 'update data');
+        }
+        
+      }
+    )
   }
   createUser() {
-
+    this.submitted = true;
+     let {email, password, fullName, address, phoneNumber, role} = this.userForm.value;
+     if (this.userForm.invalid) {
+      return;
+    }
+     this.userService.createUser(email, password, fullName, address, phoneNumber, role).subscribe(
+      res => {
+          if (res.status === 'success') {
+            this.activeModal.close(true);
+            window.location.reload();
+            this.notification.showSuccess('success', 'created new user');
+          } else {
+            this.notification.showError('failure', 'create new user');
+          }
+      }
+     )
   }
   handleCancel() {
-
+    this.submitted = false;
+    this.activeModal.close('Close click');
   }
 }

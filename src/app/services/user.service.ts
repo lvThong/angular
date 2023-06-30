@@ -15,26 +15,37 @@ export class UserService {
         private commonService: CommonService
     ) { }
 
-    listUser(page: number, limit: number, ):Observable <any> {
-        let params = {
-            page: page,
-            limit: limit
-        };
+    listUser(params: any): Observable<any> {
         return this.http.get(`${API_URL}/user${this.commonService.buildQueryString(params)}`, httpOptions);
     }
-    createUser():Observable <any> {
-        let params = {};
-        return this.http.post(`${API_URL}/user`, params, httpOptions);
+    createUser(email: string, password: string, fullName: string, address: string, phoneNumber: string, role: number): Observable<any> {
+        let params = {
+            email,
+            password,
+            fullName,
+            address,
+            phoneNumber,
+            role
+        };
+        return this.http.post(`${API_URL}/create-user`, params, httpOptions);
     }
-    updateUser():Observable <any> {
-        let params = {};
-        return this.http.put(`${API_URL}/user`,params, httpOptions);
+    updateUser(id: number, email: string, fullName: string, address: string, phoneNumber: string, role: number): Observable<any> {
+        let params = {
+            id,
+            email,
+            fullName,
+            address,
+            phoneNumber,
+            role
+
+        };
+        return this.http.put(`${API_URL}/update-user`, params, httpOptions);
     }
-    deleteUser(id: string):Observable <any> {
-        return this.http.delete(`${API_URL}/user`, httpOptions);
-    }   
-    getRole(): Observable <any> {
+    deleteUser(id: any): Observable<any> {
+        return this.http.delete(`${API_URL}/delete-user`,{ headers: new HttpHeaders({ 'Content-Type': 'application/json' }), body: { id: id } });
+    }
+    getRole(): Observable<any> {
         return this.http.get(`${API_URL}/get-role`, httpOptions);
     }
-    
- }
+
+}
