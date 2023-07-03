@@ -7,6 +7,7 @@ import { FormComponent } from './form/form.component';
 import { RegisterComponent } from './register/register.component';
 import { EditProductComponent } from './edit-product/edit-product.component';
 import { UserComponent } from './user/user.component';
+import { OrderComponent } from './order/order.component';
 
 const routes: Routes = [
   {
@@ -36,11 +37,12 @@ const routes: Routes = [
   {
     path: 'user',
     component: UserComponent
-  }, 
-  // {
-  //   path: 'customer',
-  //   component: CustomerComponent
-  // }
+  },
+  {
+    path: 'order',
+    component: OrderComponent
+  }
+
 ];
 
 @NgModule({

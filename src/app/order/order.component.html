@@ -1,0 +1,95 @@
+<div class="container my-5">
+    <div class="sub-nav"></div>
+    <div class="search-order"></div>
+    <div class="title">ORDER</div>
+    <div class="add-new-order my-5">
+
+
+        <button type="button" class="btn btn-primary my-5" (click)="createOrder()">ADD NEW ORDER</button>
+        <form class="d-flex flex-row mb-3" [formGroup]="filterForm">
+            <div class="p-2">
+
+                <input type="text" class="form-control" formControlName="id" placeholder="ID">
+            </div>
+            <div class="p-2">
+
+                <input type="text" class="form-control" formControlName="name" placeholder="Name">
+            </div>
+
+            <div class="p-2">
+                <select class="form-control" formControlName="status">
+                    <option value="null" disabled> Status </option>
+                    <option *ngFor="let option of options" value="{{option.value}}">{{option.name}}</option>
+                </select>
+            </div>
+            <div class="p-2">
+
+                <input type="text" class="form-control" formControlName="userName" placeholder="UserName">
+            </div>
+            <div class="p-2">
+
+                <input type="text" class="form-control" formControlName="customerName" placeholder="CustomerName">
+            </div>
+            <div class="p-2">
+
+                <input type="text" class="form-control" formControlName="customerAddress" placeholder="Address">
+            </div>
+            <div class="p-2">
+
+                <input type="text" class="form-control" formControlName="customerEmail" placeholder="Email">
+            </div>
+            <div class="p-2">
+
+                <input type="text" class="form-control" formControlName="customerPhoneNumber" placeholder="Phone">
+            </div>
+
+
+            <div class="p-2">
+                <button type="button" class="btn btn-primary mb-3" (click)="findOrder()">Search</button>
+            </div>
+        </form>
+
+    </div>
+    <div class="list-orders">
+        <table class="table table-hover">
+            <thead>
+                <tr>
+                    <th scope="col">#</th>
+                    <th scope="col">Name</th>
+                    <th scope="col">Customer</th>
+                    <th scope="col">User</th>
+                    <th scope="col">Status</th>
+                    <th scope="col">Created At</th>
+                    <th scope="col">Updated At</th>
+                </tr>
+            </thead>
+
+            <tbody>
+                <tr
+                    *ngFor="let order of orders | paginate: {  itemsPerPage: limit, currentPage: page, totalItems: count}; let i = index">
+                    <th scope="col">{{order.id}}</th>
+                    <th scope="col">{{order.name}}</th>
+                    <th scope="col">{{order.customerName}}</th>
+                    <th scope="col">{{order.userName}}</th>
+                    <th scope="col">{{convertStringStatus(options, order.status)}}</th>
+                    <th scope="col">{{order.created_at | date:'MMM d, y, h:mm:ss a'}}</th>
+                    <th scope="col">{{order.updated_at | date:'MMM d, y, h:mm:ss a'}}</th>
+                    <!-- <th scope="col">{{order.status}}</th> -->
+                    <th scope="col text-center">
+                        <button type="button" class="btn btn-success" (click)="displayOrder(order.id)">View</button>
+                        <button type="button" class="btn btn-primary" (click)="editOrder(order)">Update</button>
+                        <button type="button" class="btn btn-danger" (click)="deleteOrder(order.id)">Delete</button>
+                    </th>
+
+                </tr>
+            </tbody>
+        </table>
+        <div class="d-flex justify-content-center">
+            <pagination-controls previousLabel="Prev" nextLabel="Next" (pageChange)="handlePage($event)">
+            </pagination-controls>
+        </div>
+        <!-- <app-edit-order></app-edit-order> -->
+    </div>
+    <app-spinner></app-spinner>
+
+</div>
