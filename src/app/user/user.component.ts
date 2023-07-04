@@ -119,11 +119,11 @@ export class UserComponent {
     this.userService.deleteUser(id).subscribe(
       res => {
         if (res.status === 'success') {
-          window.location.reload();
           this.notifi.showSuccess('success', 'deleted user');
         } else {
           this.notifi.showError('failure', 'deleted user');
         }
+        this.getListUser();
       }
     )
   }

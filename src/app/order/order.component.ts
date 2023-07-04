@@ -3,6 +3,7 @@ import { FormBuilder } from '@angular/forms';
 import { OrderService } from '../services/order.service';
 import { NgbModal, NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { OrderDetailComponent } from '../order-detail/order-detail.component';
+import { NotificationService } from '../services/notification.service';
 
 @Component({
   selector: 'app-order',
@@ -45,6 +46,7 @@ export class OrderComponent {
     private formBuilder: FormBuilder,
     private orderService: OrderService,
     private modalService: NgbModal,
+    private notifi: NotificationService
   ) { }
   ngOnInit() {
     this.getListOrder();
@@ -88,7 +90,16 @@ export class OrderComponent {
 
   }
   deleteOrder(id: number) {
-
+      this.orderService.deleteOrder(id).subscribe(
+        res => {
+          if(res.status === 'success') {
+            this.notifi.showSuccess('success', 'Deleted order');
+          } else {
+            this.notifi.showError('error', 'No delete order')
+          }
+          this.getListOrder();
+        }
+      )
   }
   findOrder() {
 

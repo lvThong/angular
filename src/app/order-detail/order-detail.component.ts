@@ -15,6 +15,25 @@ export class OrderDetailComponent {
   inforOrder: any;
   total: any;
   title: any;
+  status: any;
+  options = [
+    {
+      name: 'New Order',
+      value: 1
+    },
+    {
+      name: 'Spending Order',
+      value: 2
+    },
+    {
+      name: 'Ok Order',
+      value: 3
+    },
+    {
+      name: 'Delivery To Buyer',
+      value: 4
+    }
+  ];
   constructor(
     private orderService: OrderService,
     protected activeModal: NgbActiveModal
@@ -32,6 +51,7 @@ export class OrderDetailComponent {
             this.inforUser = res.data.information_staff;
             this.inforOrder = res.data.information_order;
             this.total = res.data.total_price;
+            this.status = res.data.status;
           }
       }
     )
