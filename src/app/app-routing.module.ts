@@ -8,6 +8,7 @@ import { RegisterComponent } from './register/register.component';
 import { EditProductComponent } from './edit-product/edit-product.component';
 import { UserComponent } from './user/user.component';
 import { OrderComponent } from './order/order.component';
+import { UpdateOrderComponent } from './update-order/update-order.component';
 
 const routes: Routes = [
   {
@@ -41,6 +42,10 @@ const routes: Routes = [
   {
     path: 'order',
     component: OrderComponent
+  },
+  {
+    path: 'update-order',
+    component: UpdateOrderComponent
   }
 
 ];

@@ -15,6 +15,9 @@ export class ProductService {
     getListProducts(page: number, limit: number): Observable<any> {
         return this.http.get(AUTH_API + `/product?page=${page}&limit=${limit}`);
     }
+    getAllProducts(): Observable<any> {
+        return this.http.get(AUTH_API + `/product`);
+    }
     addNewProduct(name: string, category_id: number, image: string, description: string, price: number): Observable<any> {
         return this.http.post(AUTH_API + '/create-product', {
             name,

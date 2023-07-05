@@ -4,6 +4,7 @@ import { OrderService } from '../services/order.service';
 import { NgbModal, NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { OrderDetailComponent } from '../order-detail/order-detail.component';
 import { NotificationService } from '../services/notification.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-order',
@@ -46,7 +47,8 @@ export class OrderComponent {
     private formBuilder: FormBuilder,
     private orderService: OrderService,
     private modalService: NgbModal,
-    private notifi: NotificationService
+    private notifi: NotificationService,
+    private router: Router
   ) { }
   ngOnInit() {
     this.getListOrder();
@@ -87,7 +89,7 @@ export class OrderComponent {
     return option[0].name;
   }
   editOrder(order: any) {
-
+    this.router.navigate(['update-order', {id: JSON.stringify(order.id)}]);
   }
   deleteOrder(id: number) {
       this.orderService.deleteOrder(id).subscribe(
