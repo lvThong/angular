@@ -1,5 +1,5 @@
 import { Component, Input, Output } from '@angular/core';
-import { FormBuilder, FormControl } from '@angular/forms';
+import {FormArray, FormBuilder, FormControl, FormGroup} from '@angular/forms';
 import { NotificationService } from '../services/notification.service';
 import { ProductService } from '../services/product.service';
 
@@ -9,10 +9,22 @@ import { ProductService } from '../services/product.service';
   styleUrls: ['./update-product-order.component.scss']
 })
 export class UpdateProductOrderComponent {
-  @Input() listProduct: any;
-  productForm: any;
+   listProductValue: any = {};
+  @Input()
+  get listProduct() {
+    return this.listProductValue;
+  }
+  set listProduct(value: any) {
+    this.listProductValue = value;
+    this.setValueForm();
+  }
+
+  productForm: FormGroup = new FormGroup({});
+
+  listProductForm: any;
   quantity: any;
   submitted: any;
+  // listProducts: any;
   products: any;
   @Input() total: any;
   constructor(
@@ -21,8 +33,8 @@ export class UpdateProductOrderComponent {
     private productService: ProductService
   ) {}
   ngOnInit() {
-    this.createForm();
     this.getProducts();
+    this.createForm();
 
   }
   getProducts() {
@@ -34,22 +46,46 @@ export class UpdateProductOrderComponent {
       }
     )
   }
+
   createForm() {
     this.productForm = this.formBuilder.group({
       productId: null
     });
-    this.quantity = new FormControl(null);
+    this.listProductForm = this.formBuilder.group({
+      listProducts: this.formBuilder.array([])
+    });
+  }
+
+  setValueForm() {
+    this.listProduct.forEach((item: any) => {
+      let listProductForm: FormGroup = this.formBuilder.group(item);
+      this.listProductForm.get('listProducts').push(listProductForm);
+    });
+  }
+  get listProducts() : FormArray {
+    return <FormArray>this.listProductForm.get('listProducts');
   }
   addProduct(){
-    let {productId} = this.productForm.value;
-
-    let productUpdate = this.products.find( (item: any) =>  item.id == productId);
-    console.log(this.listProduct);
-    // console.log(productUpdate);
+    // let {productId} = this.productForm.value;
+    //
+    // let productUpdate = this.products.find( (item: any) =>  item.id == productId);
+    // // console.log(this.listProduct);
+    // // console.log(productUpdate);
     // this.listProduct.push(productUpdate);
     // console.log(this.products);
+    console.log(this.listProducts.controls)
   }
   getTotal(){
+  }
 
+  getData(data: any, key: string) {
+    return data.value[key];
+  }
+
+  getData2(data: any) {
+    return data;
+  }
+  testData(data: any) {
+    return data;
   }
 }
