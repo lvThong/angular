@@ -1,5 +1,5 @@
-import { Component } from '@angular/core';
-import { FormBuilder, Validators } from '@angular/forms';
+import {Component, Input} from '@angular/core';
+import {FormBuilder, Validators} from '@angular/forms';
 
 @Component({
   selector: 'app-update-customer-order',
@@ -7,25 +7,51 @@ import { FormBuilder, Validators } from '@angular/forms';
   styleUrls: ['./update-customer-order.component.scss']
 })
 export class UpdateCustomerOrderComponent {
+  inforCustomerValue: any;
+
+  @Input()
+  get inforCustomer() {
+    return this.inforCustomerValue;
+  }
+
+  set inforCustomer(value: any) {
+    this.inforCustomerValue = value;
+
+    if (value) {
+      this.setValueForm();
+    }
+  };
+
   customerForm: any;
   submitted: any;
+
   constructor(
     private formBuilder: FormBuilder,
-    
-  ){
+  ) {}
+
+  setValueForm() {
+    this.customerForm.setValue({
+      email: this.inforCustomer.email,
+      fullName: this.inforCustomer.fullName,
+      address: this.inforCustomer.address,
+      phoneNumber: this.inforCustomer.phoneNumber
+    });
   }
+
   ngOnInit() {
-    this.createForm();
+    this.createForm()
   }
+
   createForm() {
     this.submitted = false;
     this.customerForm = this.formBuilder.group({
-      email: [null,[Validators.email, Validators.required]],
+      email: [null, [Validators.email, Validators.required]],
       fullName: [null, [Validators.required, Validators.min(3)]],
       address: [null, Validators.required],
       phoneNumber: [null, Validators.required]
     });
   }
+
   get f() {
     return this.customerForm.controls;
   }

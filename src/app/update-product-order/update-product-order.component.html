@@ -17,46 +17,52 @@
             <tbody>
             <ng-container [formGroup]="listProductForm">
               <!--                              {{listProducts.controls | json}}-->
-              <ng-container formArrayName="listProducts" *ngFor="let productss of listProducts.controls | keyvalue;">
-                <ng-container [formGroup]="getData2(productss.value)">
+              <ng-container formArrayName="listProducts"
+                            *ngFor="let productss of listProducts.controls | keyvalue; let i = index">
+                <!--                <ng-container [formGroup]="getData2(productss.value)">-->
+                <ng-container [formGroupName]="i">
                   <tr>
-                    <td>
-                      <input min="0" formControlName="quantity" type="number" class="form-control form-control-sm"
-                             style="width: 50px;"/>
+                    <!--                    <td>{{getData(productss.value, 'name')}}</td>-->
+                    <!--                    <td>-->
+                    <!--                      <input min="0" formControlName="quantity" type="number" class="form-control form-control-sm"-->
+                    <!--                             style="width: 50px;"/>-->
+                    <!--                    </td>-->
+
+
+                    <!--                    <td>{{getData(productss.value, 'category_name')}}</td>-->
+                    <!--                                                        <td>12312</td>-->
+                    <th scope="row">
+                      <div class="d-flex align-items-center">
+                        <!-- <img src="https://i.imgur.com/2DsA49b.webp" class="img-fluid rounded-3"
+                            style="width: 120px;" alt="Book"> -->
+                        <div class="flex-column ms-4">
+                          <p class="mb-2">{{getData(productss.value, 'name')}}</p>
+                        </div>
+                      </div>
+                    </th>
+                    <td class="align-middle">
+                      <p class="mb-0" style="font-weight: 500;">{{getData(productss.value, 'category_name')}}</p>
                     </td>
+                    <td class="align-middle">
+                      <div class="d-flex flex-row">
+                        <button class="btn btn-link px-2" (click)="decrease(i)">
+                          <i class="fas fa-minus"></i>
+                        </button>
 
-                    <td>{{getData(productss.value, 'name')}}</td>
-                    <td>{{getData(productss.value, 'description')}}</td>
-                    <!--                                    <td>12312</td>-->
-                    <!--&lt;!&ndash;                                    <th scope="row">&ndash;&gt;-->
-                    <!--&lt;!&ndash;                                        <div class="d-flex align-items-center">&ndash;&gt;-->
-                    <!--&lt;!&ndash;                                            &lt;!&ndash; <img src="https://i.imgur.com/2DsA49b.webp" class="img-fluid rounded-3"&ndash;&gt;-->
-                    <!--&lt;!&ndash;                                                style="width: 120px;" alt="Book"> &ndash;&gt;&ndash;&gt;-->
-                    <!--&lt;!&ndash;                                            <div class="flex-column ms-4">&ndash;&gt;-->
-                    <!--&lt;!&ndash;                                                &lt;!&ndash; <p class="mb-2">{{product.name}}</p> &ndash;&gt;&ndash;&gt;-->
-                    <!--&lt;!&ndash;                                            </div>&ndash;&gt;-->
-                    <!--&lt;!&ndash;                                        </div>&ndash;&gt;-->
-                    <!--&lt;!&ndash;                                    </th>&ndash;&gt;-->
-                    <!--&lt;!&ndash;                                    <td class="align-middle">&ndash;&gt;-->
-                    <!--&lt;!&ndash;                                        &lt;!&ndash; <p class="mb-0" style="font-weight: 500;">{{product.category_name}}</p> &ndash;&gt;&ndash;&gt;-->
-                    <!--&lt;!&ndash;                                    </td>&ndash;&gt;-->
-                    <!--&lt;!&ndash;                                    <td class="align-middle">&ndash;&gt;-->
-                    <!--&lt;!&ndash;                                        <div class="d-flex flex-row">&ndash;&gt;-->
-                    <!--&lt;!&ndash;                                            <button class="btn btn-link px-2">&ndash;&gt;-->
-                    <!--&lt;!&ndash;                                                <i class="fas fa-minus"></i>&ndash;&gt;-->
-                    <!--&lt;!&ndash;                                            </button>&ndash;&gt;-->
+                        <input min="0" formControlName="quantity" type="number"
+                               class="form-control form-control-sm" style="width: 50px;"/>
 
-                    <!--&lt;!&ndash;                                            <input min="0" formControlName="quantity" type="number"&ndash;&gt;-->
-                    <!--&lt;!&ndash;                                                class="form-control form-control-sm" style="width: 50px;" />&ndash;&gt;-->
-
-                    <!--&lt;!&ndash;                                            <button class="btn btn-link px-2">&ndash;&gt;-->
-                    <!--&lt;!&ndash;                                                <i class="fas fa-plus"></i>&ndash;&gt;-->
-                    <!--&lt;!&ndash;                                            </button>&ndash;&gt;-->
-                    <!--&lt;!&ndash;                                        </div>&ndash;&gt;-->
-                    <!--&lt;!&ndash;                                    </td>&ndash;&gt;-->
-                    <!--&lt;!&ndash;                                    <td class="align-middle">&ndash;&gt;-->
-                    <!--&lt;!&ndash;                                        &lt;!&ndash; <p class="mb-0" style="font-weight: 500;">${{product.price}}</p> &ndash;&gt;&ndash;&gt;-->
-                    <!--&lt;!&ndash;                                    </td>&ndash;&gt;-->
+                        <button class="btn btn-link px-2" (click)="increase(i)">
+                          <i class="fas fa-plus"></i>
+                        </button>
+                      </div>
+                    </td>
+                    <td class="align-middle">
+                      <p class="mb-0" style="font-weight: 500;">${{getData(productss.value, 'price')}}</p>
+                    </td>
+                    <td class="align-middle">
+                      <button type="button" class="btn btn-sm btn-danger" (click)="removeProduct(i)">Remove</button>
+                    </td>
                   </tr>
                 </ng-container>
               </ng-container>
