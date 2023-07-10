@@ -1,0 +1,66 @@
+<div class="container my-5">
+  <div class="sub-nav"></div>
+  <div class="search-customer"></div>
+  <div class="title">CUSTOMER</div>
+  <div class="add-new-customer my-5">
+
+
+    <button type="button" class="btn btn-primary my-5" (click)="createCustomer()">ADD NEW CUSTOMER</button>
+    <div class="w-80">
+      <form class="d-flex flex-row mb-3" [formGroup]="filterForm" >
+        <div class="p-2">
+          <input type="text" class="form-control" formControlName="id" placeholder="Id">
+        </div>
+        <div class="p-2">
+          <input type="text" class="form-control" formControlName="name" placeholder="Name">
+        </div>
+        <div class="p-2">
+          <input type="text" class="form-control" formControlName="phoneNumber" placeholder="Phone">
+        </div>
+        <div class="p-2">
+          <input type="text" class="form-control" formControlName="address" placeholder="Address">
+        </div>
+        <div class="p-2">
+          <button type="button" class="btn btn-primary mb-3" (click)="findCustomer()" >Search</button>
+        </div>
+      </form>
+
+    </div>
+  </div>
+  <div class="list-customers">
+    <table class="table table-hover">
+      <thead>
+      <tr>
+        <th scope="col">#</th>
+        <th scope="col">Email</th>
+        <th scope="col">FullName</th>
+        <th scope="col">PhoneNumber</th>
+        <th scope="col">Address</th>
+
+      </tr>
+      </thead>
+
+      <tbody>
+      <tr
+        *ngFor="let customer of customers | paginate: {  itemsPerPage: limit, currentPage: page, totalItems: count}; let i = index">
+        <th scope="col">{{customer.id}}</th>
+        <th scope="col">{{customer.email}}</th>
+        <th scope="col">{{customer.fullName}}</th>
+        <th scope="col">{{customer.phoneNumber}}</th>
+        <th scope="col">{{customer.address}}</th>
+        <th scope="col text-center">
+          <button type="button" class="btn btn-primary" (click)="editCustomer(customer)">Edit</button>
+          <button type="button" class="btn btn-danger" (click)="deleteCustomer(customer.id)">Delete</button>
+        </th>
+
+      </tr>
+      </tbody>
+    </table>
+    <div class="d-flex justify-content-center">
+      <pagination-controls previousLabel="Prev" nextLabel="Next" (pageChange)="handlePage($event)">
+      </pagination-controls>
+    </div>
+  </div>
+  <app-spinner></app-spinner>
+
+</div>

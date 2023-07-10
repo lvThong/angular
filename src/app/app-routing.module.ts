@@ -9,12 +9,13 @@ import { EditProductComponent } from './edit-product/edit-product.component';
 import { UserComponent } from './user/user.component';
 import { OrderComponent } from './order/order.component';
 import { UpdateOrderComponent } from './update-order/update-order.component';
+import {CustomerComponent} from "./customer/customer.component";
 
 const routes: Routes = [
   {
-    path: '', 
+    path: '',
     component: HomeComponent
-  }, 
+  },
   {
     path: 'login',
     component: LoginComponent
@@ -46,6 +47,10 @@ const routes: Routes = [
   {
     path: 'update-order',
     component: UpdateOrderComponent
+  },
+  {
+    path: 'customer',
+    component: CustomerComponent
   }
 
 ];

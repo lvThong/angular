@@ -51,36 +51,52 @@
             </div>
         </div>
 
-        <div class="form-group">
-            <label for="formControlInput2">Role</label>
-            <div *ngIf="title === 'Add New User'; else elseBlock1">
-                <select class="form-control" formControlName="role"
-                    [ngClass]="{'is-invalid': submitted && f.role.errors}">
-                    <option value="null" disabled>Role</option>
-                    <option *ngFor="let role of roles" value="{{role.id}}">{{role.name}}</option>
-                </select>
-            </div>
-            <ng-template #elseBlock1>
-                <select class="form-control" formControlName="role"
-                    [ngClass]="{'is-invalid': submitted && f.role.errors}">
-                    <option *ngFor="let role of roles" value="{{role.id}}">{{role.name}}</option>
-                </select>
-            </ng-template>
-            <div *ngIf="submitted && f.role.errors" class="invalid-feedback">
-                <div *ngIf="f.role.errors.required">Role is required</div>
-            </div>
-        </div>
+     <ng-container *ngIf="title === 'Add New User' || title === 'Edit User'">
+       <div class="form-group">
+         <label for="formControlInput2">Role</label>
+         <div *ngIf="title === 'Add New User'; else elseBlock1">
+           <select class="form-control" formControlName="role"
+                   [ngClass]="{'is-invalid': submitted && f.role.errors}">
+             <option value="null" disabled>Role</option>
+             <option *ngFor="let role of roles" value="{{role.id}}">{{role.name}}</option>
+           </select>
+         </div>
+         <ng-template #elseBlock1>
+           <select class="form-control" formControlName="role"
+                   [ngClass]="{'is-invalid': submitted && f.role.errors}">
+             <option *ngFor="let role of roles" value="{{role.id}}">{{role.name}}</option>
+           </select>
+         </ng-template>
+         <div *ngIf="submitted && f.role.errors" class="invalid-feedback">
+           <div *ngIf="f.role.errors.required">Role is required</div>
+         </div>
+       </div>
+     </ng-container>
 
     </form>
 
 </div>
 
 <div class="modal-footer">
+
+  <div *ngIf="title === 'Edit User' || title === 'Add New User'; else elseBlock3">
     <div *ngIf="title === 'Edit User'; else elseBlock2">
-        <button type="button" class="btn btn-primary btn-lg active" (click)="updateUser()">Apply</button>
+      <button type="button" class="btn btn-primary btn-lg active" (click)="updateUser()">Apply</button>
     </div>
     <ng-template #elseBlock2>
-        <button type="button" class="btn btn-primary btn-lg active" (click)="createUser()">Create</button>
+      <button type="button" class="btn btn-primary btn-lg active" (click)="createUser()">Create</button>
     </ng-template>
     <button type="button" class="btn btn-secondary btn-lg active float-right" (click)="handleCancel()">Cancel</button>
+  </div>
+  <ng-template #elseBlock3>
+    <div *ngIf="title === 'Add New Customer'">
+      <button type="button" class="btn btn-primary btn-lg active" (click)="createCustomer()">Create</button>
+
+    </div>
+    <div *ngIf="title === 'Edit Customer'">
+      <button type="button" class="btn btn-primary btn-lg active" (click)="updateCustomer()">Apply</button>
+    </div>
+    <button type="button" class="btn btn-secondary btn-lg active float-right" (click)="handleCancel()">Cancel</button>
+  </ng-template>
+
 </div>

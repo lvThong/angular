@@ -3,6 +3,7 @@ import { FormBuilder, Validators } from '@angular/forms';
 import { UserService } from '../services/user.service';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { NotificationService } from '../services/notification.service';
+import {CustomerService} from "../services/customer.service";
 
 @Component({
   selector: 'app-popup',
@@ -21,6 +22,7 @@ export class PopupComponent {
     public userService: UserService,
     public activeModal: NgbActiveModal,
     public notification: NotificationService,
+    public customerService: CustomerService
   ) { }
   ngOnInit() {
     this.getRole();
@@ -62,11 +64,11 @@ export class PopupComponent {
           window.location.reload();
           this.notification.showSuccess('success','updaded data');
 
-          
+
         } else {
           this.notification.showError('failure', 'update data');
         }
-        
+
       }
     )
   }
@@ -92,4 +94,44 @@ export class PopupComponent {
     this.submitted = false;
     this.activeModal.close('Close click');
   }
+  updateCustomer() {
+    this.submitted = true;
+    let {id, email, fullName, address, phoneNumber} = this.userForm.value;
+    if (this.userForm.invalid) {
+      return;
+    }
+    this.customerService.updatecCustomer(id, email, fullName, address, phoneNumber).subscribe(
+      res => {
+        if (res.status === 'success') {
+          this.activeModal.close(true);
+          window.location.reload();
+          this.notification.showSuccess('success','updaded data');
+
+
+        } else {
+          this.notification.showError('failure', 'update data');
+        }
+
+      }
+    )
+  }
+  createCustomer() {
+    this.submitted = true;
+    let {email, fullName, address, phoneNumber} = this.userForm.value;
+    if (this.userForm.invalid) {
+      return;
+    }
+    this.customerService.createCustomer(email, fullName, address, phoneNumber).subscribe(
+      res => {
+        if (res.status === 'success') {
+          this.activeModal.close(true);
+          window.location.reload();
+          this.notification.showSuccess('success', 'created new user');
+        } else {
+          this.notification.showError('failure', 'create new user');
+        }
+      }
+    )
+  }
+
 }
