@@ -30,6 +30,7 @@ import { NewOrderComponent } from './new-order/new-order.component';
 import { UpdateCustomerOrderComponent } from './update-customer-order/update-customer-order.component';
 import { UpdateProductOrderComponent } from './update-product-order/update-product-order.component';
 import { CustomerComponent } from './customer/customer.component';
+import { ListProductCustomerComponent } from './list-product-customer/list-product-customer.component';
 
 @NgModule({
   declarations: [
@@ -44,7 +45,7 @@ import { CustomerComponent } from './customer/customer.component';
     RegisterComponent, 
     ShowAuthedDirective, 
     EditProductComponent, 
-    SpinnerComponent, UserComponent, PopupComponent, OrderComponent, OrderDetailComponent, UpdateOrderComponent, NewOrderComponent, UpdateCustomerOrderComponent, UpdateProductOrderComponent, CustomerComponent,
+    SpinnerComponent, UserComponent, PopupComponent, OrderComponent, OrderDetailComponent, UpdateOrderComponent, NewOrderComponent, UpdateCustomerOrderComponent, UpdateProductOrderComponent, CustomerComponent, ListProductCustomerComponent,
 
   ],
   imports: [

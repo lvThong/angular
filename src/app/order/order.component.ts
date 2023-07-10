@@ -107,7 +107,7 @@ export class OrderComponent {
 
   }
   createOrder() {
-
+    this.router.navigate(['create-order']);
   }
   handlePage(event: any) {
     this.page = event;
@@ -117,7 +117,7 @@ export class OrderComponent {
     let modalRef = this.modalService.open(OrderDetailComponent, { size: 'lg', backdrop: "static" });
     modalRef.componentInstance.id = id;
     modalRef.componentInstance.title = 'ORDER';
-    
+
     modalRef.result.then(
       result => {},
       reason => {}

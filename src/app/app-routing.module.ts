@@ -10,6 +10,7 @@ import { UserComponent } from './user/user.component';
 import { OrderComponent } from './order/order.component';
 import { UpdateOrderComponent } from './update-order/update-order.component';
 import {CustomerComponent} from "./customer/customer.component";
+import {NewOrderComponent} from "./new-order/new-order.component";
 
 const routes: Routes = [
   {
@@ -51,6 +52,10 @@ const routes: Routes = [
   {
     path: 'customer',
     component: CustomerComponent
+  },
+  {
+    path:'create-order',
+    component: NewOrderComponent
   }
 
 ];
