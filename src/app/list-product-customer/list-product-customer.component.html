@@ -1,5 +1,69 @@
 <div class="container">
-  <form [formGroup]="listProductForm">
 
-  </form>
+  <div class="row col">
+    <div class="table-responsive">
+      <table class="table">
+        <thead>
+        <tr>
+          <th scope="col">Category</th>
+          <th scope="col" class="h5">Product</th>
+          <th scope="col">Quantity</th>
+          <th scope="col">Price</th>
+        </tr>
+        </thead>
+        <tbody>
+        <form [formGroup]="listProductForm">
+
+          <ng-container formArrayName="listProduct" *ngFor="let product of listProduct; let i = index">
+            <div [formGroupName]="i" style="
+                border: 1px solid #ccc;
+                border-top: none;
+                padding: 10px;">
+              <td class="align-middle">
+                <select formControlName="categoryId">
+                  <option value="null" disabled>Category</option>
+                  <option *ngFor="let category of categories" value="{{category.id}}">{{category.name}}</option>
+                </select>
+              </td>
+              <td class="align-middle">
+                <select formControlName="productId">
+                  <option *ngFor="let prod of products " value="{{prod.id}}">{{prod.name}}</option>
+                </select>
+              </td>
+              <td class="align-middle">
+                <div class="d-flex flex-row">
+                  <button class="btn btn-link px-2" (click)="decrease(i)">
+                    <i class="fas fa-minus"></i>
+                  </button>
+
+                  <input formControlName="quantity" type="number"
+                         class="form-control form-control-sm" style="width: 50px;"/>
+
+                  <button class="btn btn-link px-2" (click)="increase(i)">
+                    <i class="fas fa-plus"></i>
+                  </button>
+                </div>
+              </td>
+              <td class="align-middle">
+                <p style="font-weight: 500;">{{getPrice(productId, quantity)}}</p>
+              </td>
+              <td class="align-middle">
+                <button type="button" class="btn btn-sm btn-danger" (click)="removeProduct(i)">Remove</button>
+              </td>
+            </div>
+          </ng-container>
+
+
+        </form>
+
+        </tbody>
+
+      </table>
+      <div class="row">
+        <div class="col-md-6"></div>
+        <div class="col-md-4"><i class="fas fa-plus-circle"></i></div>
+      </div>
+    </div>
+  </div>
+
 </div>
