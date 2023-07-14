@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { CategoryService } from '../services/category.service';
 
 @Component({
   selector: 'app-category',
@@ -6,16 +7,27 @@ import { Component } from '@angular/core';
   styleUrls: ['./category.component.scss']
 })
 export class CategoryComponent {
-  limit: any;
-  page: any;
-  count: any;
+  limit: any = 5;
+  page: any = 1;
+  count: any = 0;
   categories: any;
 
-  contructor(
-
+  constructor(
+     private categoryService: CategoryService, 
   ){}
   ngOnInit() {
-
+    this.getCategories();
+  }
+  getCategories() {
+    let params = {};
+    this.categoryService.getListCategories(params).subscribe(
+      res => {
+        if(res.status === 'success') {
+          this.categories = res.data.data;
+          this.count = res.data.total;
+        }
+      }
+    )
   }
   createCategory(){
 
@@ -27,6 +39,6 @@ export class CategoryComponent {
 
   }
   handlePage(event: any) {
-
+    this.page  = event.target.value;
   }
 }

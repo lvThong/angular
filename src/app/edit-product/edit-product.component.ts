@@ -39,10 +39,11 @@ export class EditProductComponent {
   }
 
   getListCategory() {
-    this.categoryService.getListCategories().subscribe(
+    let params = {};
+    this.categoryService.getListCategories(params).subscribe(
       res => {
         if (res.status === 'success') {
-          this.categories = res.data;
+          this.categories = res.data.data;
         } else {
           this.categories = {};
         }

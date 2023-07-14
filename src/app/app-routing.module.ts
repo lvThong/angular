@@ -3,19 +3,18 @@ import { RouterModule, Routes } from '@angular/router';
 import { HomeComponent } from './home/home.component';
 import { LoginComponent } from './login/login.component';
 import { ProductsComponent } from './products/products.component';
-import { FormComponent } from './form/form.component';
 import { RegisterComponent } from './register/register.component';
 import { EditProductComponent } from './edit-product/edit-product.component';
 import { UserComponent } from './user/user.component';
 import { OrderComponent } from './order/order.component';
 import { UpdateOrderComponent } from './update-order/update-order.component';
-import {CustomerComponent} from "./customer/customer.component";
-import {NewOrderComponent} from "./new-order/new-order.component";
+import { CustomerComponent } from "./customer/customer.component";
+import { NewOrderComponent } from "./new-order/new-order.component";
 import { CategoryComponent } from './category/category.component';
 
 const routes: Routes = [
   {
-    path: '',
+    path: 'home',
     component: HomeComponent
   },
   {
@@ -55,7 +54,7 @@ const routes: Routes = [
     component: CustomerComponent
   },
   {
-    path:'create-order',
+    path: 'create-order',
     component: NewOrderComponent
   },
   {
