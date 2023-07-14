@@ -11,7 +11,7 @@
           <th scope="col">Price</th>
         </tr>
         </thead>
-        <tbody style="height: 150px" [formGroup]="listProductForm">
+        <tbody style="height: 120px" [formGroup]="listProductForm">
         <ng-container formArrayName="listProduct" *ngFor="let product of listProduct.controls; let i = index">
           <tr [formGroupName]="i">
             <td class="align-middle">
