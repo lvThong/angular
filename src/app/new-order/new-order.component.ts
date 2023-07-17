@@ -1,6 +1,10 @@
-import { Component } from '@angular/core';
+import { Component, ViewChild,ElementRef } from '@angular/core';
 import {FormBuilder, Validators} from "@angular/forms";
 import {TokenStorageService} from "../services/token-storage.service";
+import { ListProductCustomerComponent } from '../list-product-customer/list-product-customer.component';
+import { OrderService } from '../services/order.service';
+import { NotificationService } from '../services/notification.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-new-order',
@@ -11,7 +15,8 @@ export class NewOrderComponent {
 
   orderForm: any;
   submitted: boolean = false;
-  user: any
+  user: any;
+  listProduct: any;
   options = [
     {
       name: 'New Order',
@@ -30,9 +35,13 @@ export class NewOrderComponent {
       value: 4
     }
   ];
+  @ViewChild(ListProductCustomerComponent) child!: any;
   constructor(
     private formBuilder: FormBuilder,
-    private sessionService: TokenStorageService
+    private sessionService: TokenStorageService,
+    private orderService: OrderService,
+    private notifi: NotificationService,
+    private router: Router
   ){}
 
   ngOnInit() {
@@ -58,6 +67,21 @@ export class NewOrderComponent {
   get f() {
     return this.orderForm.controls;
   }
-  createOrder() {}
+  createOrder() {
+    let {email, fullName, address, phoneNumber, orderName, status} = this.orderForm.value;
+    let products = this.child.getData();
+    let params = {
+      email, fullName, address, phoneNumber, name: orderName, status, products: JSON.stringify(products)
+    }
 
+    this.orderService.createOrder(params).subscribe(
+      res => {
+        if (res.status === 'success') {
+          this.router.navigate(['/order']);
+          this.notifi.showSuccess('success', 'create new order');
+        }
+      }
+    )
+    
+  }
 }

@@ -19,7 +19,7 @@ export class CategoryComponent {
     this.getCategories();
   }
   getCategories() {
-    let params = {};
+    let params = {page: this.page, limit: this.limit};
     this.categoryService.getListCategories(params).subscribe(
       res => {
         if(res.status === 'success') {
@@ -39,6 +39,7 @@ export class CategoryComponent {
 
   }
   handlePage(event: any) {
-    this.page  = event.target.value;
+    this.page  = event;
+    this.getCategories();
   }
 }

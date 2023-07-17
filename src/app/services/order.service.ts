@@ -21,16 +21,11 @@ export class OrderService {
     getDetailOrder(params: any): Observable<any> {
         return this.http.get(`${API_URL}/get-detail-order${this.commonService.buildQueryString(params)}`, httpOptions);
     }
-    createOrder(): Observable<any> {
-        let params = {
-       
-        };
+    createOrder(params: any): Observable<any> {
+        console.log(params);
         return this.http.post(`${API_URL}/create-order`, params, httpOptions);
     }
-    updateOrder(): Observable<any> {
-        let params = {
-      
-        };
+    updateOrder(params: any): Observable<any> {
         return this.http.put(`${API_URL}/update-order`, params, httpOptions);
     }
     deleteOrder(id: any): Observable<any> {

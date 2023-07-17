@@ -1,8 +1,9 @@
-import {Component} from '@angular/core';
-import {FormArray, FormBuilder, FormGroup} from "@angular/forms";
-import {CategoryService} from "../services/category.service";
-import {ProductService} from "../services/product.service";
-import {NotificationService} from "../services/notification.service";
+import { Component } from '@angular/core';
+import { FormArray, FormBuilder, FormGroup } from "@angular/forms";
+import { CategoryService } from "../services/category.service";
+import { ProductService } from "../services/product.service";
+import { NotificationService } from "../services/notification.service";
+import { OutletContext } from '@angular/router';
 
 @Component({
   selector: 'app-list-product-customer',
@@ -16,7 +17,6 @@ export class ListProductCustomerComponent {
   quantity: any;
   productId: any;
   categoryId: any;
-
   constructor(
     private formBuilder: FormBuilder,
     private categoryService: CategoryService,
@@ -48,7 +48,6 @@ export class ListProductCustomerComponent {
       res => {
         if (res.status === 'success') {
           let products = res.data.data;
-          console.log(products);
           <FormArray>this.listProductForm.get('listProduct').controls[i].get('listProduct').setValue(products);
         }
       }
@@ -113,7 +112,23 @@ export class ListProductCustomerComponent {
   getPrice(i: any) {
     return this.listProductForm.get('listProduct').controls[i].value.price;
   }
+
   removeProduct(i: any) {
     this.listProductForm.get('listProduct').removeAt(i);
+  }
+
+  getData() {
+    let products = this.listProductForm.get('listProduct').value;
+    let result: any = [];
+
+    products.forEach(({ productId, quantity }: any) => {
+      const product = {
+        product_id: productId,
+        quantity: quantity
+      }
+
+      result = [...result, product];
+    });
+    return result;
   }
 }

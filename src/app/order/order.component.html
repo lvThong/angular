@@ -72,9 +72,8 @@
                     <th scope="col">{{order.customerName}}</th>
                     <th scope="col">{{order.userName}}</th>
                     <th scope="col">{{convertStringStatus(options, order.status)}}</th>
-                    <th scope="col">{{order.created_at | date:'MMM d, y, h:mm:ss a'}}</th>
-                    <th scope="col">{{order.updated_at | date:'MMM d, y, h:mm:ss a'}}</th>
-                    <!-- <th scope="col">{{order.status}}</th> -->
+                    <th scope="col">{{order.created_at * 1000 | date:'MMM d, y, h:mm:ss a'}}</th>
+                    <th scope="col">{{order.updated_at * 1000 | date:'MMM d, y, h:mm:ss a'}}</th>
                     <th scope="col text-center">
                         <button type="button" class="btn btn-success" (click)="displayOrder(order.id)">View</button>
                         <button type="button" class="btn btn-primary" (click)="editOrder(order)">Update</button>
