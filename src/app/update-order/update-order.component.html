@@ -1,6 +1,43 @@
 <div class="container">
+    <div class="row">
+        <div class="col-md-6">
+            <app-update-customer-order [inforCustomer]="inforCustomer"></app-update-customer-order>
+        </div>
+        <div class="col-md-2"></div>
+        <div class="col-md-4">
+            <form [formGroup]="updateOrderForm">
+                <div class="row">
+                    <div class="m-5">Information Order</div>
+                    <div class="col-md-12">
+                        <div class="form-group">
+                            <label>Order No.</label>
+                            <input type="text" class="form-control" formControlName="orderName" />
+                        </div>
+                        <div class="form-group">
+                            <label class="input-group-text">Status Order</label>
+                            <select class="form-select" formControlName="status">
+                                <option *ngFor="let option of options" value="{{option.value}}"> {{option.name}}
+                                </option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+                <div class="my-5 mx-5" [ngStyle]="{'border-top': '1px solid #ccc'}"></div>
+                <div class="row">
+                    <div class="form-group">
+                        <label>Staff:</label>
+                        <span>&nbsp;&nbsp;&nbsp;{{123}}</span>
+                        <!-- <input type="text" class="form-control"  formControlName="user"/> -->
+                    </div>
+                    <div class="form-group">
+                        <label>Position:</label>
+                        <span>&nbsp;&nbsp;&nbsp;{{123}}</span>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
 
-    <app-update-customer-order [inforCustomer]="inforCustomer"></app-update-customer-order>
     <app-update-product-order [listProduct]="listProduct" [total]="total"></app-update-product-order>
-    
+
 </div>

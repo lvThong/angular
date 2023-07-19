@@ -22,7 +22,6 @@ export class OrderService {
         return this.http.get(`${API_URL}/get-detail-order${this.commonService.buildQueryString(params)}`, httpOptions);
     }
     createOrder(params: any): Observable<any> {
-        console.log(params);
         return this.http.post(`${API_URL}/create-order`, params, httpOptions);
     }
     updateOrder(params: any): Observable<any> {
