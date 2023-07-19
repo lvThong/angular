@@ -13,9 +13,11 @@ export class OrderDetailComponent {
   inforUser: any;
   inforCustomer: any;
   inforOrder: any;
+  created_at: any;
   total: any;
   title: any;
   status: any;
+  orderName: any;
   options = [
     {
       name: 'New Order',
@@ -52,6 +54,8 @@ export class OrderDetailComponent {
             this.inforOrder = res.data.information_order;
             this.total = res.data.total_price;
             this.status = res.data.status;
+            this.created_at = this.inforOrder.created_at;
+            this.orderName = this.inforOrder.name;
           }
       }
     )

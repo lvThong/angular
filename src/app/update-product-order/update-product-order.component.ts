@@ -116,4 +116,7 @@ export class UpdateProductOrderComponent {
   removeProduct(i: any) {
     this.listProductForm.get('listProducts').removeAt(i);
   }
+  getDataComponent() {
+    return this.listProductForm.value.listProducts;
+  }
 }

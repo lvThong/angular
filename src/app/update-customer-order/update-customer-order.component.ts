@@ -55,4 +55,7 @@ export class UpdateCustomerOrderComponent {
   get f() {
     return this.customerForm.controls;
   }
+  getDataComponent() {
+    return this.customerForm.value;
+  }
 }
