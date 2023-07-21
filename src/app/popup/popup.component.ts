@@ -100,7 +100,7 @@ export class PopupComponent {
     if (this.userForm.invalid) {
       return;
     }
-    this.customerService.updatecCustomer(id, email, fullName, address, phoneNumber).subscribe(
+    this.customerService.updateCustomer(id, email, fullName, address, phoneNumber).subscribe(
       res => {
         if (res.status === 'success') {
           this.activeModal.close(true);

@@ -69,7 +69,6 @@ export class UpdateOrderComponent {
   ngOnInit() {
     let data: any = this.route.snapshot.paramMap.get('id');
     this.id = JSON.parse(data);
-
     this.getOrderDetail(this.id);
     this.createForm();
   }
@@ -77,7 +76,6 @@ export class UpdateOrderComponent {
     this.orderService.getDetailOrder({ order_id: id }).subscribe(
       res => {
         if (res.status === 'success') {
-
           this.orderDetail = res.data;
           this.listProduct = this.orderDetail.list_products;
           this.inforCustomer = this.orderDetail.information_customer;
@@ -125,7 +123,7 @@ export class UpdateOrderComponent {
        email, address, phoneNumber, fullName, products: JSON.stringify(products)
 
     };
-    console.log(params);
+    // console.log(params);
     this.orderService.updateOrder(params).subscribe(
       res => {
         if (res.status === 'success') {

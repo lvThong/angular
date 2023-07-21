@@ -27,7 +27,7 @@ export class CustomerService {
     };
     return this.http.post(`${API_URL}/create-customer`, params, httpOptions);
   }
-  updatecCustomer(id: number, email: string, fullName: string, address: string, phoneNumber: string): Observable<any> {
+  updateCustomer(id: number, email: string, fullName: string, address: string, phoneNumber: string): Observable<any> {
     let params = {
       id,
       email,

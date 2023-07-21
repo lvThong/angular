@@ -1,5 +1,6 @@
 import {Component, Input} from '@angular/core';
 import {FormBuilder, Validators} from '@angular/forms';
+import { CustomerService } from '../services/customer.service';
 
 @Component({
   selector: 'app-update-customer-order',
@@ -27,6 +28,7 @@ export class UpdateCustomerOrderComponent {
 
   constructor(
     private formBuilder: FormBuilder,
+    private customerService: CustomerService
   ) {}
 
   setValueForm() {
@@ -57,5 +59,15 @@ export class UpdateCustomerOrderComponent {
   }
   getDataComponent() {
     return this.customerForm.value;
+  }
+  updateCustomer() {
+    let {email, fullName, phoneNumber, address} = this.customerForm.value;
+    this.customerService.updateCustomer(this.inforCustomer.id, email, fullName, address, phoneNumber).subscribe(
+      res => {
+        if (res.status === 'success') {
+
+        }
+      }
+    )
   }
 }
