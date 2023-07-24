@@ -55,20 +55,13 @@ export class PopupCategoryComponent {
   }
 
   createForm() {
-    // this.editForm = new FormGroup({
-    //   id: new FormControl(this.item ? this.item.id : null),
-    //   name: new FormControl(this.item  ? this.item.name : null),
-    //   category: new FormControl(this.item  ? this.item.category_id: null),
-    //   price: new FormControl(this.item  ? this.item.price : null),
-    //   description: new FormControl(this.item ? this.item.description: null),
-    //   image: new FormControl(this.item  ? this.item.image: null),  
-    // });
     this.editForm = this.formBuilder.group({
       id: [this.item ? this.item.id : null],
       name: [this.item ? this.item.name : null, Validators.required],
-      category: [this.item ? this.item.category_id : null, Validators.required],
+      category: [this.item ? this.item.parent_id : null, Validators.required],
       description: [this.item ? this.item.description : null, Validators.required],
     })
+
   }
 
   get f() { return this.editForm.controls; }
@@ -76,43 +69,36 @@ export class PopupCategoryComponent {
 
   handleCancel() {
     this.submitted = false;
-    // this.editForm.reset();
     this.activeModal.close('Close click');
   }
   updateCategory() {
     this.submitted = true;
-    const { id, name, description, price, image, category } = this.editForm.value;
-    console.log('Logger form: ' + this.editForm.invalid);
-    if (this.editForm.invalid) {
-      return;
-    }
-    let params = {};
+    const { id, name, description, category } = this.editForm.value;
+    let params = { id, name, description, parent_id: category };
     this.categoryService.updateCategory(params).subscribe(
       res => {
         if (res.status === 'success') {
-
-
           this.activeModal.close(true);
           window.location.reload();
-          this.notification.showSuccess( 'success','update product');
+          this.notification.showSuccess('success', 'update category');
         }
       }
     )
   }
   createCategory() {
     this.submitted = true;
-    const { name, description, price, image, category } = this.editForm.value;
+    const { name, description, category } = this.editForm.value;
 
     if (this.editForm.invalid) {
       return;
     }
-    let params = {};
+    let params = { name, parent_id: category, description };
     this.categoryService.createCategory(params).subscribe(
       res => {
         if (res.status === 'success') {
           this.activeModal.close(true);
           window.location.reload();
-          this.notification.showSuccess('success', 'create product');
+          this.notification.showSuccess('success', 'create category');
 
         }
       }

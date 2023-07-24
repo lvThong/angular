@@ -30,6 +30,8 @@ export class OrderService {
     deleteOrder(id: any): Observable<any> {
         return this.http.delete(`${API_URL}/delete-order`,{ headers: new HttpHeaders({ 'Content-Type': 'application/json' }), body: { id: id } });
     }
-    
+    getListDetailOrder(params: any): Observable<any> {
+        return this.http.get(`${API_URL}/get-list-detail-order${this.commonService.buildQueryString(params)}`, httpOptions);
+    }
 
 }

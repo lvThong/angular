@@ -3,7 +3,7 @@ import { FormBuilder, Validators } from '@angular/forms';
 import { UserService } from '../services/user.service';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { NotificationService } from '../services/notification.service';
-import {CustomerService} from "../services/customer.service";
+import { CustomerService } from "../services/customer.service";
 
 @Component({
   selector: 'app-popup',
@@ -41,11 +41,11 @@ export class PopupComponent {
     this.userForm = this.formBuilder.group({
       id: [this.data ? this.data.id : null],
       email: [this.data ? this.data.email : null, Validators.required],
-      password: [null, Validators.required],
+      password: this.data ? [null]: [Validators.required],
       fullName: [this.data ? this.data.fullName : null, Validators.required],
       address: [this.data ? this.data.address : null, Validators.required],
       phoneNumber: [this.data ? this.data.phoneNumber : null, Validators.required],
-      role: [this.data ? this.data.role : null, Validators.required],
+      role: [this.data ? this.data.role : null],
     });
   }
   get f() {
@@ -53,7 +53,7 @@ export class PopupComponent {
   }
   updateUser() {
     this.submitted = true;
-    let {id, email, fullName, address, phoneNumber, role} = this.userForm.value;
+    let { id, email, fullName, address, phoneNumber, role } = this.userForm.value;
     if (this.userForm.invalid) {
       return;
     }
@@ -62,7 +62,7 @@ export class PopupComponent {
         if (res.status === 'success') {
           this.activeModal.close(true);
           window.location.reload();
-          this.notification.showSuccess('success','updaded data');
+          this.notification.showSuccess('success', 'updaded data');
 
 
         } else {
@@ -74,21 +74,21 @@ export class PopupComponent {
   }
   createUser() {
     this.submitted = true;
-     let {email, password, fullName, address, phoneNumber, role} = this.userForm.value;
-     if (this.userForm.invalid) {
+    let { email, password, fullName, address, phoneNumber, role } = this.userForm.value;
+    if (this.userForm.invalid) {
       return;
     }
-     this.userService.createUser(email, password, fullName, address, phoneNumber, role).subscribe(
+    this.userService.createUser(email, password, fullName, address, phoneNumber, role).subscribe(
       res => {
-          if (res.status === 'success') {
-            this.activeModal.close(true);
-            window.location.reload();
-            this.notification.showSuccess('success', 'created new user');
-          } else {
-            this.notification.showError('failure', 'create new user');
-          }
+        if (res.status === 'success') {
+          this.activeModal.close(true);
+          window.location.reload();
+          this.notification.showSuccess('success', 'created new user');
+        } else {
+          this.notification.showError('failure', 'create new user');
+        }
       }
-     )
+    )
   }
   handleCancel() {
     this.submitted = false;
@@ -96,16 +96,17 @@ export class PopupComponent {
   }
   updateCustomer() {
     this.submitted = true;
-    let {id, email, fullName, address, phoneNumber} = this.userForm.value;
+    let { id, email, fullName, address, phoneNumber } = this.userForm.value;
     if (this.userForm.invalid) {
       return;
     }
+
     this.customerService.updateCustomer(id, email, fullName, address, phoneNumber).subscribe(
       res => {
         if (res.status === 'success') {
           this.activeModal.close(true);
           window.location.reload();
-          this.notification.showSuccess('success','updaded data');
+          this.notification.showSuccess('success', 'updaded data');
 
 
         } else {
@@ -117,10 +118,12 @@ export class PopupComponent {
   }
   createCustomer() {
     this.submitted = true;
-    let {email, fullName, address, phoneNumber} = this.userForm.value;
+    let { email, fullName, address, phoneNumber } = this.userForm.value;
+    console.log(this.userForm.value)
     if (this.userForm.invalid) {
       return;
     }
+;
     this.customerService.createCustomer(email, fullName, address, phoneNumber).subscribe(
       res => {
         if (res.status === 'success') {

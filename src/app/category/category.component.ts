@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { CategoryService } from '../services/category.service';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { PopupCategoryComponent } from '../popup-category/popup-category.component';
+import { NotificationService } from '../services/notification.service';
 @Component({
   selector: 'app-category',
   templateUrl: './category.component.html',
@@ -16,6 +17,7 @@ export class CategoryComponent {
   constructor(
      private categoryService: CategoryService,
      private modalService: NgbModal,
+     private notifi: NotificationService
   ){}
   ngOnInit() {
     this.getCategories();
@@ -33,7 +35,7 @@ export class CategoryComponent {
   }
   createCategory(){
     const modalRef = this.modalService.open(PopupCategoryComponent, { size: 'lg', backdrop: "static" });
-    modalRef.componentInstance.title = 'Add New Product';
+    modalRef.componentInstance.title = 'Add New Category';
     modalRef.result.then(
       result => {
 
@@ -43,10 +45,28 @@ export class CategoryComponent {
     )
   }
   editCategory(category: any) {
+    const modalRef = this.modalService.open(PopupCategoryComponent, {size: 'lg', backdrop: 'static'});
+    modalRef.componentInstance.title = 'Edit Category';
+    modalRef.componentInstance.item = category;
+    modalRef.result.then(
+      result => {
 
+      }, reason => {
+
+      }
+    )
   }
-  deleteCategory(id: any) {
-
+  deleteCategory(id: any) { 
+    console.log(id);
+    this.categoryService.deleteCategory(id).subscribe(
+      res => {
+        if (res.status === 'success') {
+          this.getCategories();
+          this.notifi.showSuccess('success', 'delete category');
+          
+        }
+      }
+    )
   }
   handlePage(event: any) {
     this.page  = event;

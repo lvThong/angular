@@ -20,10 +20,10 @@ export class CategoryService {
         return this.http.get(`${AUTH_API}/category${this.commonService.buildQueryString(params)}`, httpOptions);
     }
     createCategory(params: any): Observable<any> {
-        return this.http.post(`${AUTH_API}/create-category`, this.commonService.buildQueryString(params), httpOptions);
+        return this.http.post(`${AUTH_API}/create-category`, params, httpOptions);
     }
     updateCategory(params: any): Observable<any> {
-        return this.http.put(`${AUTH_API}/update-category`, this.commonService.buildQueryString(params), httpOptions);
+        return this.http.put(`${AUTH_API}/update-category`, params, httpOptions);
     }
     deleteCategory(id: any): Observable<any> {
         return this.http.delete(`${AUTH_API}/delete-category`, { headers: new HttpHeaders({ 'Content-Type': 'application/json' }), body: { id: id }});

@@ -34,12 +34,14 @@
                 <select class="form-control" formControlName="category"
                     [ngClass]="{'is-invalid': submitted && f.category.errors}">
                     <option value="null" disabled> Choose category </option>
+                    <option value="0">root</option>
                     <option *ngFor="let category of categories" value="{{category.id}}">{{category.name}}</option>
                 </select>
             </div>
             <ng-template #elseBlock1>
                 <select class="form-control" formControlName="category"
                     [ngClass]="{'is-invalid': submitted && f.category.errors}">
+                    <option value="0">root</option>
                     <option *ngFor="let category of categories" value="{{category.id}}">{{category.name}}</option>
                 </select>
             </ng-template>

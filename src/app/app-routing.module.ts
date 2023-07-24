@@ -11,6 +11,7 @@ import { UpdateOrderComponent } from './update-order/update-order.component';
 import { CustomerComponent } from "./customer/customer.component";
 import { NewOrderComponent } from "./new-order/new-order.component";
 import { CategoryComponent } from './category/category.component';
+import { AuthGuard } from './helpers/auth.guard';
 
 const routes: Routes = [
   {
@@ -25,10 +26,6 @@ const routes: Routes = [
     path: 'product',
     component: ProductsComponent
   },
-  // {
-  //   path: 'product/edit',
-  //   component: EditProductComponent
-  // },
   {
     path: 'register',
     component: RegisterComponent
@@ -39,7 +36,8 @@ const routes: Routes = [
   },
   {
     path: 'user',
-    component: UserComponent
+    component: UserComponent,
+    
   },
   {
     path: 'order',
@@ -47,7 +45,8 @@ const routes: Routes = [
   },
   {
     path: 'update-order',
-    component: UpdateOrderComponent
+    component: UpdateOrderComponent,
+    canActivate: [AuthGuard]
   },
   {
     path: 'customer',
@@ -59,7 +58,8 @@ const routes: Routes = [
   },
   {
     path: 'category',
-    component: CategoryComponent
+    component: CategoryComponent,
+    canActivate: [AuthGuard]
   }
 
 ];

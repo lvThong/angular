@@ -59,11 +59,12 @@ export class OrderComponent {
       page: this.page,
       limit: this.limit
     };
-    this.orderService.listOrder(params).subscribe(
+    this.orderService.getListDetailOrder(params).subscribe(
       res => {
         if (res.status === 'success') {
           this.orders = res.data.data;
           this.count = res.data.total;
+          console.log(this.orders);
         }
       }
     )
@@ -89,25 +90,35 @@ export class OrderComponent {
     return option[0].name;
   }
   editOrder(order: any) {
-    this.router.navigate(['update-order', {id: JSON.stringify(order.id)}]);
+    this.router.navigate(['update-order', { id: JSON.stringify(order.id) }]);
   }
   deleteOrder(id: number) {
-      this.orderService.deleteOrder(id).subscribe(
-        res => {
-          if(res.status === 'success') {
-            this.notifi.showSuccess('success', 'Deleted order');
-          } else {
-            this.notifi.showError('error', 'No delete order')
-          }
-          this.getListOrder();
+    this.orderService.deleteOrder(id).subscribe(
+      res => {
+        if (res.status === 'success') {
+          this.notifi.showSuccess('success', 'Deleted order');
+        } else {
+          this.notifi.showError('error', 'No delete order')
         }
-      )
+        this.getListOrder();
+      }
+    )
   }
   findOrder() {
-    let {id, name, status, userName, customerName, customerAddress, customerEmail, customerPhoneNumber} = this.filterForm.value;
-    let params = {};
+    let { id, name, status, customerName, customerAddress, customerEmail, customerPhoneNumber } = this.filterForm.value;
+    let params = {
+      orderId: id, name, status,
+      fullName: customerName, email: customerEmail, address: customerAddress, phoneNumber: customerPhoneNumber
+    };
 
-
+    this.orderService.getListDetailOrder(params).subscribe(
+      res => {
+        if (res.status === 'success') {
+          this.orders = res.data.data;
+          this.count = res.data.total;
+        }
+      }
+    )
   }
   createOrder() {
     this.router.navigate(['create-order']);
@@ -122,8 +133,8 @@ export class OrderComponent {
     modalRef.componentInstance.title = 'ORDER';
 
     modalRef.result.then(
-      result => {},
-      reason => {}
+      result => { },
+      reason => { }
     );
 
   }

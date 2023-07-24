@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
-
+import {TokenStorageService} from './token-storage.service';
 const AUTH_API = 'http://127.0.0.1:8000/api';
 
 const httpOptions = {
@@ -12,7 +12,7 @@ const httpOptions = {
   providedIn: 'root'
 })
 export class AuthService {
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient, private storageService: TokenStorageService) { }
 
   login(email: string, password: string): Observable<any> {
 
@@ -32,5 +32,21 @@ export class AuthService {
       role
 
     }, httpOptions);
+  }
+  isLoggedIn() {
+      if (!this.storageService.getUser()){
+        return false;
+      }
+      return true;
+  }
+  isAdmin() {
+    if (!this.storageService.getUser()){
+      
+      return false;
+    }
+    if (this.storageService.getUser().role > 3) {
+      return false;
+    }
+    return true;
   }
 }
