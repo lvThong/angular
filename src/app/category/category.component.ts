@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { CategoryService } from '../services/category.service';
-
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { PopupCategoryComponent } from '../popup-category/popup-category.component';
 @Component({
   selector: 'app-category',
   templateUrl: './category.component.html',
@@ -13,7 +14,8 @@ export class CategoryComponent {
   categories: any;
 
   constructor(
-     private categoryService: CategoryService, 
+     private categoryService: CategoryService,
+     private modalService: NgbModal,
   ){}
   ngOnInit() {
     this.getCategories();
@@ -30,7 +32,15 @@ export class CategoryComponent {
     )
   }
   createCategory(){
+    const modalRef = this.modalService.open(PopupCategoryComponent, { size: 'lg', backdrop: "static" });
+    modalRef.componentInstance.title = 'Add New Product';
+    modalRef.result.then(
+      result => {
 
+      }, reason => {
+
+      }
+    )
   }
   editCategory(category: any) {
 

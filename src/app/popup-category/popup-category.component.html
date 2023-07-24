@@ -1,0 +1,67 @@
+<div class="modal-header">
+    <div class="title text-center ">
+        <h4>{{title}}</h4>
+    </div>
+    <button type="button" class="close" aria-label="Close" (click)="activeModal.close('Close click')">
+        <span aria-hidden="true">X</span>
+    </button>
+</div>
+<div class="modal-body">
+
+
+    <form [formGroup]="editForm">
+        <div class="form-group">
+            <label for="formControlInput1">Name</label>
+            <!-- {{editForm.name.errors.required}} -->
+            <input type="text" class="form-control" formControlName="name"
+                [ngClass]="{'is-invalid': submitted && f.name.errors}">
+            <div *ngIf="submitted && f.name.errors" class="invalid-feedback">
+                <div *ngIf="f.name.errors.required">Name is required</div>
+            </div>
+
+        </div>
+        <div class="form-group">
+            <label for="formControlInput2">Description</label>
+            <input type="text" class="form-control" formControlName="description"
+                [ngClass]="{'is-invalid': submitted && f.description.errors}">
+            <div *ngIf="submitted && f.description.errors" class="invalid-feedback">
+                <div *ngIf="f.description.errors.required">Description is required</div>
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="formControlInput2">Parent Category</label>
+            <div *ngIf="title === 'Add New Category'; else elseBlock1">
+                <select class="form-control" formControlName="category"
+                    [ngClass]="{'is-invalid': submitted && f.category.errors}">
+                    <option value="null" disabled> Choose category </option>
+                    <option *ngFor="let category of categories" value="{{category.id}}">{{category.name}}</option>
+                </select>
+            </div>
+            <ng-template #elseBlock1>
+                <select class="form-control" formControlName="category"
+                    [ngClass]="{'is-invalid': submitted && f.category.errors}">
+                    <option *ngFor="let category of categories" value="{{category.id}}">{{category.name}}</option>
+                </select>
+            </ng-template>
+            <div *ngIf="submitted && f.category.errors" class="invalid-feedback">
+                <div *ngIf="f.category.errors.required">Category is required</div>
+            </div>
+        </div>
+    </form>
+    <!-- <div class="error-message"> error</div> -->
+</div>
+
+<div class="modal-footer">
+    <div *ngIf="title === 'Edit Category'; else elseBlock2">
+        <button type="button" class="btn btn-primary btn-lg active" (click)="updateCategory()">Apply</button>
+    </div>
+    <ng-template #elseBlock2>
+        <button type="button" class="btn btn-primary btn-lg active" (click)="createCategory()">Create</button>
+    </ng-template>
+
+
+    <!-- <a href="#" class="btn btn-primary btn-lg active" role="button" aria-pressed="true">Apply</a> -->
+    <!-- <button (click)="testNow()">Test ngay</button> -->
+    <!-- <a href="#" class="btn btn-secondary btn-lg active float-right" role="button" aria-pressed="true">Cancel</a> -->
+    <button type="button" class="btn btn-secondary btn-lg active float-right" (click)="handleCancel()">Cancel</button>
+</div>

@@ -24,16 +24,16 @@ export class ProductsComponent {
     private categoryService: CategoryService,
     private modalService: NgbModal,
     private router: Router,
-    private formBuilder:FormBuilder,
+    private formBuilder: FormBuilder,
     private notification: NotificationService,
   ) { }
 
   ngOnInit() {
-   this.getCategories();
-   this.createForm();
+    this.getCategories();
+    this.createForm();
     this.getProducts(this.page, this.limit);
- 
-  
+
+
   }
   getCategories() {
     let params = {};
@@ -46,11 +46,11 @@ export class ProductsComponent {
     )
   }
   createForm() {
-      this.filterForm = this.formBuilder.group({
-          id: [null],
-          name: [null],
-          category: [null],
-      });
+    this.filterForm = this.formBuilder.group({
+      id: [null],
+      name: [null],
+      category: [null],
+    });
   }
   // getCategories() {
   //   this.categoryService.getListCategories().subscribe(
@@ -64,13 +64,13 @@ export class ProductsComponent {
 
   // }
   getProducts(page: number, limit: number) {
-    const {id, name, category} = this.filterForm.value;
-    this.productService.findProduct(id, name, category, this.page,this.limit)
+    const { id, name, category } = this.filterForm.value;
+    this.productService.findProduct(id, name, category, this.page, this.limit)
       .subscribe((res) => {
         if (res.status === 'success') {
           this.products = res.data.data;
           this.count = res.data.total;
-        } 
+        }
 
       });
 
@@ -83,7 +83,7 @@ export class ProductsComponent {
         res => {
           if (res.status === 'success') {
             this.getProducts(this.page, this.limit);
-          // alert('delete success');
+            // alert('delete success');
             this.notification.showSuccess('delete sucess', 'Product');
             // this.router.navigate(['/product']); 
 
@@ -109,7 +109,7 @@ export class ProductsComponent {
     const modalRef = this.modalService.open(EditProductComponent, { size: 'lg', backdrop: "static" });
     modalRef.componentInstance.title = 'Add New Product';
     modalRef.result.then(
-      result =>  {
+      result => {
 
       }, reason => {
 
@@ -117,22 +117,22 @@ export class ProductsComponent {
     )
   }
   handlePage(event: any) {
-      this.page = event;
-      this.getProducts(this.page, this.limit);
+    this.page = event;
+    this.getProducts(this.page, this.limit);
   }
-  findProduct(){
-      const {id, name, category} = this.filterForm.value;
-      this.productService.findProduct(id, name, category, this.page, this.limit).subscribe(
-        (res) => {
-          if (res.status === 'success') {
-              this.products = res.data.data;
-              this.count = res.data.total;
-            // this.router.navigate(['/product']);   
-          }
-
-
+  findProduct() {
+    const { id, name, category } = this.filterForm.value;
+    this.productService.findProduct(id, name, category, this.page, this.limit).subscribe(
+      (res) => {
+        if (res.status === 'success') {
+          this.products = res.data.data;
+          this.count = res.data.total;
+          // this.router.navigate(['/product']);   
         }
-      )
+
+
+      }
+    )
   }
-  
+
 }
