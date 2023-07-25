@@ -62,13 +62,21 @@ export class OrderComponent {
     this.orderService.getListDetailOrder(params).subscribe(
       res => {
         if (res.status === 'success') {
-          this.orders = res.data.data;
+         
+          let data = res.data.data;
+          
+          let result: any = [];
+          // let keys = Object.keys(data);
+          for(let index in data) {
+            result = [...result, data[index][0]];
+          }
+          this.orders = result;
           this.count = res.data.total;
-          console.log(this.orders);
         }
       }
     )
   }
+  
   createForm() {
     this.filterForm = this.formBuilder.group(
       {
@@ -79,7 +87,8 @@ export class OrderComponent {
         customerName: null,
         customerAddress: null,
         customerPhoneNumber: null,
-        customerEmail: null
+        customerEmail: null, 
+        productName: null
       }
     );
   }
@@ -105,16 +114,24 @@ export class OrderComponent {
     )
   }
   findOrder() {
-    let { id, name, status, customerName, customerAddress, customerEmail, customerPhoneNumber } = this.filterForm.value;
+    let { id, name, status, customerName, customerAddress, customerEmail, customerPhoneNumber, productName } = this.filterForm.value;
     let params = {
       orderId: id, name, status,
-      fullName: customerName, email: customerEmail, address: customerAddress, phoneNumber: customerPhoneNumber
+      fullName: customerName, email: customerEmail, address: customerAddress, phoneNumber: customerPhoneNumber, productName
     };
 
     this.orderService.getListDetailOrder(params).subscribe(
       res => {
         if (res.status === 'success') {
-          this.orders = res.data.data;
+          let data = res.data.data;
+          let result: any = [];
+         
+          const keys = Object.keys(data);
+          for(let key of keys) {
+            result = [...result, data[key][0]];
+          }
+
+          this.orders = result;
           this.count = res.data.total;
         }
       }

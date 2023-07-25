@@ -41,7 +41,7 @@ export class PopupComponent {
     this.userForm = this.formBuilder.group({
       id: [this.data ? this.data.id : null],
       email: [this.data ? this.data.email : null, Validators.required],
-      password: this.data ? [null]: [Validators.required],
+      password: this.data ? null : [null, Validators.required],
       fullName: [this.data ? this.data.fullName : null, Validators.required],
       address: [this.data ? this.data.address : null, Validators.required],
       phoneNumber: [this.data ? this.data.phoneNumber : null, Validators.required],

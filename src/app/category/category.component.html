@@ -33,8 +33,9 @@
           <tr>
             <th scope="col">#</th>
             <th scope="col">Name</th>
-            <th scope="col">ParentId</th>
+            <th scope="col">Parent Category</th>
             <th scope="col">Description</th>
+       
 
           </tr>
         </thead>
@@ -44,6 +45,7 @@
             *ngFor="let category of categories | paginate: {  itemsPerPage: limit, currentPage: page, totalItems: count}; let i = index">
             <th scope="col">{{category.id}}</th>
             <th scope="col">{{category.name}}</th>
+            <th scope="col">{{category.parentName ? category.parentName : 'root' }}</th>
             <th scope="col">{{category.description}}</th>
             <th scope="col text-center">
               <button type="button" class="btn btn-primary" (click)="editCategory(category)">Edit</button>

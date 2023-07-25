@@ -6,46 +6,56 @@
 
 
         <button type="button" class="btn btn-primary my-5" (click)="createOrder()">ADD NEW ORDER</button>
-        <form class="d-flex flex-row mb-3" [formGroup]="filterForm">
-            <div class="p-2">
+        <form [formGroup]="filterForm">
+            <div class="d-flex justify-content-start">
+                <div class="p-2">
 
-                <input type="text" class="form-control" formControlName="id" placeholder="ID">
+                    <input type="text" class="form-control" formControlName="id" placeholder="ID">
+                </div>
+                <div class="p-2">
+    
+                    <input type="text" class="form-control" formControlName="name" placeholder="Name">
+                </div>
+    
+                <div class="p-2">
+                    <select class="form-control" formControlName="status">
+                        <option value="null" disabled> Status </option>
+                        <option *ngFor="let option of options" value="{{option.value}}">{{option.name}}</option>
+                    </select>
+                </div>
+                <div class="p-2">
+
+                    <input type="text" class="form-control" formControlName="userName" placeholder="User">
+                </div>
             </div>
-            <div class="p-2">
+           
+            <div class="d-flex justify-content-start">
+                <div class="p-2">
 
-                <input type="text" class="form-control" formControlName="name" placeholder="Name">
+                    <input type="text" class="form-control" formControlName="customerName" placeholder="CustomerName">
+                </div>
+                <div class="p-2">
+    
+                    <input type="text" class="form-control" formControlName="customerAddress" placeholder="Address">
+                </div>
+                <div class="p-2">
+    
+                    <input type="text" class="form-control" formControlName="customerEmail" placeholder="Email">
+                </div>
+                <div class="p-2">
+    
+                    <input type="text" class="form-control" formControlName="customerPhoneNumber" placeholder="Phone">
+                </div>
+                <div class="p-2">
+    
+                    <input type="text" class="form-control" formControlName="productName" placeholder="productName">
+                </div>
+    
             </div>
-
-            <div class="p-2">
-                <select class="form-control" formControlName="status">
-                    <option value="null" disabled> Status </option>
-                    <option *ngFor="let option of options" value="{{option.value}}">{{option.name}}</option>
-                </select>
-            </div>
-            <div class="p-2">
-
-                <input type="text" class="form-control" formControlName="userName" placeholder="UserName">
-            </div>
-            <div class="p-2">
-
-                <input type="text" class="form-control" formControlName="customerName" placeholder="CustomerName">
-            </div>
-            <div class="p-2">
-
-                <input type="text" class="form-control" formControlName="customerAddress" placeholder="Address">
-            </div>
-            <div class="p-2">
-
-                <input type="text" class="form-control" formControlName="customerEmail" placeholder="Email">
-            </div>
-            <div class="p-2">
-
-                <input type="text" class="form-control" formControlName="customerPhoneNumber" placeholder="Phone">
-            </div>
-
-
-            <div class="p-2">
-                <button type="button" class="btn btn-primary mb-3" (click)="findOrder()">Search</button>
+            <div class="d-flex justify-content-end">
+                <div class="p-2">
+                    <button type="button" class="btn btn-primary mb-3" (click)="findOrder()">Search</button>
+                </div>
             </div>
         </form>
 
@@ -69,8 +79,8 @@
                     *ngFor="let order of orders | paginate: {  itemsPerPage: limit, currentPage: page, totalItems: count}; let i = index">
                     <th scope="col">{{order.id}}</th>
                     <th scope="col">{{order.name}}</th>
-                    <th scope="col">{{order.customerName}}</th>
-                    <th scope="col">{{order.userName}}</th>
+                    <th scope="col">{{order.fullName}}</th>
+                    <th scope="col">{{order.staffName}}</th>
                     <th scope="col">{{convertStringStatus(options, order.status)}}</th>
                     <th scope="col">{{order.created_at * 1000 | date:'MMM d, y, h:mm:ss a'}}</th>
                     <th scope="col">{{order.updated_at * 1000 | date:'MMM d, y, h:mm:ss a'}}</th>
