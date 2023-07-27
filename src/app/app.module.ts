@@ -33,6 +33,7 @@ import { CustomerComponent } from './customer/customer.component';
 import { ListProductCustomerComponent } from './list-product-customer/list-product-customer.component';
 import { CategoryComponent } from './category/category.component';
 import { PopupCategoryComponent } from './popup-category/popup-category.component';
+import { ModalDeleteComponent } from './modal-delete/modal-delete.component';
 
 @NgModule({
   declarations: [
@@ -47,7 +48,7 @@ import { PopupCategoryComponent } from './popup-category/popup-category.componen
     RegisterComponent, 
     ShowAuthedDirective, 
     EditProductComponent, 
-    SpinnerComponent, UserComponent, PopupComponent, OrderComponent, OrderDetailComponent, UpdateOrderComponent, NewOrderComponent, UpdateCustomerOrderComponent, UpdateProductOrderComponent, CustomerComponent, ListProductCustomerComponent, CategoryComponent, PopupCategoryComponent,
+    SpinnerComponent, UserComponent, PopupComponent, OrderComponent, OrderDetailComponent, UpdateOrderComponent, NewOrderComponent, UpdateCustomerOrderComponent, UpdateProductOrderComponent, CustomerComponent, ListProductCustomerComponent, CategoryComponent, PopupCategoryComponent, ModalDeleteComponent,
 
   ],
   imports: [

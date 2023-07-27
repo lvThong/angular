@@ -5,6 +5,8 @@ import { NgbModal, NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { OrderDetailComponent } from '../order-detail/order-detail.component';
 import { NotificationService } from '../services/notification.service';
 import { Router } from '@angular/router';
+import { ProductService } from '../services/product.service';
+import { CategoryService } from '../services/category.service';
 
 @Component({
   selector: 'app-order',
@@ -17,6 +19,9 @@ export class OrderComponent {
   page: number = 1;
   count: number = 0;
   filterForm: any;
+  categories: any;
+  listProduct: any;
+  isVisible: boolean = false;
   options = [
     {
       name: 'New Order',
@@ -48,26 +53,54 @@ export class OrderComponent {
     private orderService: OrderService,
     private modalService: NgbModal,
     private notifi: NotificationService,
-    private router: Router
+    private router: Router,
+    private categoryService: CategoryService,
+    private productService: ProductService
   ) { }
   ngOnInit() {
-    this.getListOrder();
+    this.getListOrderInit();
+    this.getAllCategory();
     this.createForm();
   }
-  getListOrder() {
+  getAllCategory() {
+    let params = {};
+    this.categoryService.getListCategories(params).subscribe(
+      res => {
+        if (res.status === 'success') {
+          this.categories = res.data.data;
+        }
+      }
+    )
+  }
+  updateListProduct(event: any) {
+    let categoryId = event.target.value;
+    if (categoryId === 'null') {
+      this.isVisible = false;
+      return;
+    }
+    this.isVisible = true;
+    this.productService.getListProductByCategory(categoryId).subscribe(
+      res => {
+        if (res.status === 'success') {
+          this.listProduct = res.data.data;
+        }
+      }
+    )
+
+  }
+  getListOrderInit() {
     let params = {
       page: this.page,
       limit: this.limit
-    };
+    }
     this.orderService.getListDetailOrder(params).subscribe(
       res => {
         if (res.status === 'success') {
-         
+
           let data = res.data.data;
-          
           let result: any = [];
           // let keys = Object.keys(data);
-          for(let index in data) {
+          for (let index in data) {
             result = [...result, data[index][0]];
           }
           this.orders = result;
@@ -76,7 +109,32 @@ export class OrderComponent {
       }
     )
   }
-  
+  getListOrder() {
+
+    let { id, name, status, customerName, customerAddress, customerEmail, customerPhoneNumber, productId, userName } = this.filterForm.value;
+    let params = {
+      orderId: id, orderName: name, status,
+      fullName: customerName, email: customerEmail, address: customerAddress, phoneNumber: customerPhoneNumber,userName,
+      productId, page: this.page, limit: this.limit
+    };
+   
+    this.orderService.getListDetailOrder(params).subscribe(
+      res => {
+        if (res.status === 'success') {
+
+          let data = res.data.data;
+          let result: any = [];
+          // let keys = Object.keys(data);
+          for (let index in data) {
+            result = [...result, data[index][0]];
+          }
+          this.orders = result;
+          this.count = res.data.total;
+        }
+      }
+    )
+  }
+
   createForm() {
     this.filterForm = this.formBuilder.group(
       {
@@ -87,8 +145,10 @@ export class OrderComponent {
         customerName: null,
         customerAddress: null,
         customerPhoneNumber: null,
-        customerEmail: null, 
-        productName: null
+        customerEmail: null,
+        productName: null,
+        categoryId: null,
+        productId: null
       }
     );
   }
@@ -109,33 +169,35 @@ export class OrderComponent {
         } else {
           this.notifi.showError('error', 'No delete order')
         }
+
         this.getListOrder();
       }
     )
   }
   findOrder() {
-    let { id, name, status, customerName, customerAddress, customerEmail, customerPhoneNumber, productName } = this.filterForm.value;
-    let params = {
-      orderId: id, name, status,
-      fullName: customerName, email: customerEmail, address: customerAddress, phoneNumber: customerPhoneNumber, productName
-    };
+    // let { id, name, status, customerName, customerAddress, customerEmail, customerPhoneNumber, productId, userName } = this.filterForm.value;
+    // let params = {
+    //   orderId: id, name, status,
+    //   fullName: customerName, email: customerEmail, address: customerAddress, phoneNumber: customerPhoneNumber, productId, userName, page: this.page, limit: this.limit
+    // };
 
-    this.orderService.getListDetailOrder(params).subscribe(
-      res => {
-        if (res.status === 'success') {
-          let data = res.data.data;
-          let result: any = [];
-         
-          const keys = Object.keys(data);
-          for(let key of keys) {
-            result = [...result, data[key][0]];
-          }
+    // this.orderService.getListDetailOrder(params).subscribe(
+    //   res => {
+    //     if (res.status === 'success') {
+    //       let data = res.data.data;
+    //       let result: any = [];
 
-          this.orders = result;
-          this.count = res.data.total;
-        }
-      }
-    )
+    //       const keys = Object.keys(data);
+    //       for (let key of keys) {
+    //         result = [...result, data[key][0]];
+    //       }
+
+    //       this.orders = result;
+    //       this.count = res.data.total;
+    //     }
+    //   }
+    // )
+    this.getListOrder();
   }
   createOrder() {
     this.router.navigate(['create-order']);

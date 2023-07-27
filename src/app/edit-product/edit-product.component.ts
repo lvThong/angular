@@ -83,7 +83,7 @@ export class EditProductComponent {
   updateProduct() {
     this.submitted = true;
     const { id, name, description, price, image, category } = this.editForm.value;
-    console.log('Logger form: ' + this.editForm.invalid);
+    // console.log('Logger form: ' + this.editForm.invalid);
     if (this.editForm.invalid) {
       return;
     }

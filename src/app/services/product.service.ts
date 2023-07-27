@@ -56,7 +56,7 @@ export class ProductService {
             limit: limit
         }
         // console.log(id,name, category, page, limit);
-        console.log(`${AUTH_API}/product${buildQueryString(params)}`);
+        // console.log(`${AUTH_API}/product${buildQueryString(params)}`);
 
         return this.http.get(`${AUTH_API}/product${buildQueryString(params)}`, httpOptions);
         // return this.http.get(AUTH_API + `/product?page=${page}&limit=${limit}&id=${id}&name=${name}&category=${category}`, httpOptions);

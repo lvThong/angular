@@ -45,6 +45,7 @@ export class PopupCategoryComponent {
       res => {
         if (res.status === 'success') {
           this.categories = res.data.data;
+
         } else {
           this.categories = {};
         }
@@ -74,13 +75,23 @@ export class PopupCategoryComponent {
   updateCategory() {
     this.submitted = true;
     const { id, name, description, category } = this.editForm.value;
-    let params = { id, name, description, parent_id: category };
+
+
+    let params = { id, name, description, parent_id: Number(category) };
+
     this.categoryService.updateCategory(params).subscribe(
       res => {
         if (res.status === 'success') {
           this.activeModal.close(true);
           window.location.reload();
           this.notification.showSuccess('success', 'update category');
+        } else {
+
+          this.activeModal.close(true);
+          this.notification.showError('failure', res.message);
+          setTimeout(() => {
+            window.location.reload();
+          }, 3000);
         }
       }
     )
@@ -92,7 +103,7 @@ export class PopupCategoryComponent {
     if (this.editForm.invalid) {
       return;
     }
-    let params = { name, parent_id: category, description };
+    let params = { name, parent_id: Number(category), description };
     this.categoryService.createCategory(params).subscribe(
       res => {
         if (res.status === 'success') {

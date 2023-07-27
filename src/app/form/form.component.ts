@@ -42,6 +42,6 @@ export class FormComponent {
       age: 18
     }
 
-    console.log(this.commonService.productInfo);
+    // console.log(this.commonService.productInfo);
   }
 }

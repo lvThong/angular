@@ -13,10 +13,10 @@
                     <input type="text" class="form-control" formControlName="id" placeholder="ID">
                 </div>
                 <div class="p-2">
-    
+
                     <input type="text" class="form-control" formControlName="name" placeholder="Name">
                 </div>
-    
+
                 <div class="p-2">
                     <select class="form-control" formControlName="status">
                         <option value="null" disabled> Status </option>
@@ -28,32 +28,44 @@
                     <input type="text" class="form-control" formControlName="userName" placeholder="User">
                 </div>
             </div>
-           
+
             <div class="d-flex justify-content-start">
                 <div class="p-2">
 
                     <input type="text" class="form-control" formControlName="customerName" placeholder="CustomerName">
                 </div>
                 <div class="p-2">
-    
+
                     <input type="text" class="form-control" formControlName="customerAddress" placeholder="Address">
                 </div>
                 <div class="p-2">
-    
+
                     <input type="text" class="form-control" formControlName="customerEmail" placeholder="Email">
                 </div>
                 <div class="p-2">
-    
+
                     <input type="text" class="form-control" formControlName="customerPhoneNumber" placeholder="Phone">
                 </div>
-                <div class="p-2">
-    
-                    <input type="text" class="form-control" formControlName="productName" placeholder="productName">
-                </div>
-    
+
+
             </div>
-            <div class="d-flex justify-content-end">
-                <div class="p-2">
+
+            <div class="row">
+                <div class="d-flex justify-content-start col-md-10">
+                    <div class="p-2">
+                        <select class="form-control" formControlName="categoryId" (change)="updateListProduct($event)">
+                            <option value="null">Choosse Category</option>
+                            <option *ngFor="let category of categories" value="{{category.id}}">{{category.name}}</option>
+                        </select>
+                    </div>
+                    <div class="p-2" *ngIf="isVisible">
+                        <select class="form-control" formControlName="productId">
+                            <option *ngFor="let product of listProduct" value="{{product.id}}">{{product.name}}</option>
+                        </select>
+                    </div>
+                    
+                </div>
+                <div class="p-2 col-md-2">
                     <button type="button" class="btn btn-primary mb-3" (click)="findOrder()">Search</button>
                 </div>
             </div>

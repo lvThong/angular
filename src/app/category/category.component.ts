@@ -3,6 +3,7 @@ import { CategoryService } from '../services/category.service';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { PopupCategoryComponent } from '../popup-category/popup-category.component';
 import { NotificationService } from '../services/notification.service';
+import { ModalDeleteComponent } from '../modal-delete/modal-delete.component';
 @Component({
   selector: 'app-category',
   templateUrl: './category.component.html',
@@ -15,25 +16,25 @@ export class CategoryComponent {
   categories: any;
 
   constructor(
-     private categoryService: CategoryService,
-     private modalService: NgbModal,
-     private notifi: NotificationService
-  ){}
+    private categoryService: CategoryService,
+    private modalService: NgbModal,
+    private notifi: NotificationService,
+  ) { }
   ngOnInit() {
     this.getCategories();
   }
   getCategories() {
-    let params = {page: this.page, limit: this.limit};
+    let params = { page: this.page, limit: this.limit };
     this.categoryService.getListCategories(params).subscribe(
       res => {
-        if(res.status === 'success') {
+        if (res.status === 'success') {
           this.categories = res.data.data;
           this.count = res.data.total;
         }
       }
     )
   }
-  createCategory(){
+  createCategory() {
     const modalRef = this.modalService.open(PopupCategoryComponent, { size: 'lg', backdrop: "static" });
     modalRef.componentInstance.title = 'Add New Category';
     modalRef.result.then(
@@ -45,7 +46,7 @@ export class CategoryComponent {
     )
   }
   editCategory(category: any) {
-    const modalRef = this.modalService.open(PopupCategoryComponent, {size: 'lg', backdrop: 'static'});
+    const modalRef = this.modalService.open(PopupCategoryComponent, { size: 'lg', backdrop: 'static' });
     modalRef.componentInstance.title = 'Edit Category';
     modalRef.componentInstance.item = category;
     modalRef.result.then(
@@ -56,20 +57,30 @@ export class CategoryComponent {
       }
     )
   }
-  deleteCategory(id: any) { 
-    console.log(id);
-    this.categoryService.deleteCategory(id).subscribe(
-      res => {
-        if (res.status === 'success') {
-          this.getCategories();
-          this.notifi.showSuccess('success', 'delete category');
-          
-        }
+  deleteCategory(id: any) {
+    // console.log(id);
+    const modalRef = this.modalService.open(ModalDeleteComponent, {size: 'md', backdrop: 'static'});
+    modalRef.componentInstance.title = 'Are you sure delete this category?';
+    modalRef.result.then(
+      result => {
+        // this.categoryService.deleteCategory(id).subscribe(
+        //   res => {
+        //     if (res.status === 'success') {
+        //       this.getCategories();
+        //       this.notifi.showSuccess('success', 'delete category');
+
+        //     }
+        //   }
+        // )
+        console.log('delete');
+      }, reason => {
+
       }
     )
+
   }
   handlePage(event: any) {
-    this.page  = event;
+    this.page = event;
     this.getCategories();
   }
 }
