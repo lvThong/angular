@@ -4,29 +4,50 @@
       <h2 class="text-center"><strong>Sign up</strong></h2>
       <div class="form-group">
         <label>Username</label>
-        <input class="form-control" type="text" name="email" formControlName="email">
+        <input class="form-control" type="text" formControlName="email"
+          [ngClass]="{'is-invalid': submitted && registerForm.controls.email.errors}">
+        <div *ngIf="submitted && registerForm.controls.email.errors" class="invalid-feedback">
+          <div *ngIf="registerForm.controls.email.errors.required">Email is required</div>
+        </div>
       </div>
       <div class="form-group">
         <label>Password</label>
-        <input class="form-control" type="password" name="password" formControlName="password">
+        <input class="form-control" type="password" formControlName="password" [ngClass]="{'is-invalid': submitted && registerForm.controls.password.errors}">
+        <div *ngIf="submitted && registerForm.controls.password.errors" class="invalid-feedback">
+          <div *ngIf="registerForm.controls.password.errors.required">Password is required</div>
+        </div>
       </div>
       <div class="form-group">
         <label>FullName</label>
-        <input class="form-control" type="text" name="fullName" formControlName="fullName" >
+        <input class="form-control" type="text" formControlName="fullName" [ngClass]="{'is-invalid': submitted && registerForm.controls.fullName.errors}">
+        <div *ngIf="submitted && registerForm.controls.fullName.errors" class="invalid-feedback">
+          <div *ngIf="registerForm.controls.fullName.errors.required">FullName is required</div>
+        </div>
       </div>
       <div class="form-group">
         <label>Address</label>
-        <input class="form-control" type="text" name="address" formControlName="address">
+        <input class="form-control" type="text" formControlName="address" [ngClass]="{'is-invalid': submitted && registerForm.controls.address.errors}">
+        <div *ngIf="submitted && registerForm.controls.address.errors" class="invalid-feedback">
+          <div *ngIf="registerForm.controls.address.errors.required">Address is required</div>
+        </div>
       </div>
       <div class="form-group">
         <label>PhoneNumber</label>
-        <input class="form-control" type="text" name="phoneNumber" formControlName="phoneNumber">
+        <input class="form-control" type="text" formControlName="phoneNumber" [ngClass]="{'is-invalid': submitted && registerForm.controls.phoneNumber.errors}">
+        <div *ngIf="submitted && registerForm.controls.phoneNumber.errors" class="invalid-feedback">
+          <div *ngIf="registerForm.controls.phoneNumber.errors.required">PhoneNumber is required</div>
+        </div>
       </div>
-      <select class="form-control" formControlName="role">
-        <option [ngValue]="null" disabled>Choose type user</option>
-        <option *ngFor="let option of options" [ngValue]="option.value" [selected]="option.value === 1">{{option.label}}
-        </option>
-      </select>
+      <div class="form-group">
+        <select class="form-control" formControlName="role" [ngClass]="{'is-invalid': submitted && registerForm.controls.role.errors}">
+          <option [ngValue]="null" disabled>Choose type user</option>
+          <option *ngFor="let option of options" [ngValue]="option.value" [selected]="option.value === 1">{{option.label}}
+          </option>
+        </select>
+        <div *ngIf="submitted && registerForm.controls.role.errors" class="invalid-feedback">
+          <div *ngIf="registerForm.controls.role.errors.required">Type user is required</div>
+        </div>
+      </div>
       <div class="form-group my-5"><button class="btn btn-success btn-block btn-info" type="submit">Sign up</button>
       </div>
     </form>

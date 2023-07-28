@@ -70,7 +70,7 @@ export class PopupCategoryComponent {
 
   handleCancel() {
     this.submitted = false;
-    this.activeModal.close('Close click');
+    this.activeModal.close();
   }
   updateCategory() {
     this.submitted = true;

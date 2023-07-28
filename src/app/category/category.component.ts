@@ -59,20 +59,22 @@ export class CategoryComponent {
   }
   deleteCategory(id: any) {
     // console.log(id);
-    const modalRef = this.modalService.open(ModalDeleteComponent, {size: 'md', backdrop: 'static'});
+    const modalRef = this.modalService.open(ModalDeleteComponent, { size: 'md', backdrop: 'static' });
     modalRef.componentInstance.title = 'Are you sure delete this category?';
     modalRef.result.then(
       result => {
-        // this.categoryService.deleteCategory(id).subscribe(
-        //   res => {
-        //     if (res.status === 'success') {
-        //       this.getCategories();
-        //       this.notifi.showSuccess('success', 'delete category');
+        this.categoryService.deleteCategory(id).subscribe(
+          res => {
+            if (res.status === 'success') {
+              this.getCategories();
+              this.notifi.showSuccess('Success', 'Deleted category');
 
-        //     }
-        //   }
-        // )
-        console.log('delete');
+            } else {
+              this.notifi.showError('Failure', 'No delete category');
+            }
+          }
+        )
+
       }, reason => {
 
       }

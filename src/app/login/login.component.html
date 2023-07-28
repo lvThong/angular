@@ -3,25 +3,26 @@
     <div class="image-holder"></div>
     <form [formGroup]="formLogin" (ngSubmit)="onSubmit()" novalidate>
       <h2 class="text-center"><strong>Welcome !</strong></h2>
-      <div class="form-group"><input class="form-control" type="Username" name="username" formControlName="username"
-          placeholder="username">
-        <!-- <em *ngIf="formLogin.controls['username']?.errors" class="text-danger">
-          Username từ 3 đến 10 ký tự nhe
-        </em> -->
+      <div class="form-group"><input class="form-control" type="Username" formControlName="username"
+          placeholder="Username">
+        <div *ngIf="formLogin.controls?.username?.errors && submitted" class="text-danger">
+          Username form 3 characters
+        </div>
       </div>
-      <div class="form-group"><input class="form-control" type="password" name="password" formControlName="password"
-          placeholder="password">
-        <!-- <em
-          *ngIf="formLogin.controls['password']?.errors?.['minlength']['actualLength']<formLogin.controls['password']?.errors?.['minlength']['requiredLength']"
+      <div class="form-group"><input class="form-control" type="password" formControlName="password"
+          placeholder="Password">
+        <div
+          *ngIf="formLogin.controls?.password?.errors && submitted"
           class="text-danger">
-          Mật khẩu còn ngắn
-        </em> -->
+          Password from 5 characters
+      </div>
       </div>
       <div class="form-group">
         <div class="d-flex justify-content-between">
-          <div class="form-check"> <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
-            <label class="form-check-label" for="flexCheckDefault"> Remember me
-            </label> </div>
+          <div class="form-check"> <input class="form-check-input" type="checkbox" value="">
+            <label class="form-check-label"> Remember me
+            </label>
+          </div>
           <div> <a href="#" routerLink="/" class="text-info">Forgot Password</a> </div>
         </div>
       </div>

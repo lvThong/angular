@@ -1,15 +1,18 @@
-<div class="modal fade" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true" id="mi-modal">
-  <div class="modal-dialog modal-sm">
-    <div class="modal-content">
-      <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-        <h4 class="modal-title" id="myModalLabel">{{title}}</h4>
-      </div>
-      <div class="modal-body">1321</div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-default">No</button>
-        <button type="button" class="btn btn-primary">Yes</button>
-      </div>
-    </div>
+<!-- <div class="modal fade" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true" id="mi-modal">
+  <div class="modal-dialog modal-sm"> -->
+<div class="modal-content">
+  <div class="modal-header">
+    <h4 class="modal-title">{{title}}</h4>
+    <!-- <button type="button" class="close" aria-label="Close" (click)="activeModal.dismiss('Close click')">
+      <span aria-hidden="true">X</span>
+    </button> -->
+
+  </div>
+  <!-- <div class="modal-body"></div> -->
+  <div class="modal-footer">
+    <button type="button" class="btn btn-outline-danger" style="border: none;" (click)="cancel()">No</button>
+    <button type="button" class="btn btn-primary" (click)="deleteItem()">Yes</button>
   </div>
 </div>
+<!-- </div>
+</div> -->

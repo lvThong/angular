@@ -90,7 +90,7 @@ export class OrderComponent {
   }
   getListOrderInit() {
     let params = {
-      page: this.page,
+      page:  this.page,
       limit: this.limit
     }
     this.orderService.getListDetailOrder(params).subscribe(
