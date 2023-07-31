@@ -55,7 +55,8 @@
                     <div class="p-2">
                         <select class="form-control" formControlName="categoryId" (change)="updateListProduct($event)">
                             <option value="null">Choosse Category</option>
-                            <option *ngFor="let category of categories" value="{{category.id}}">{{category.name}}</option>
+                            <option *ngFor="let category of categories" value="{{category.id}}">{{category.name}}
+                            </option>
                         </select>
                     </div>
                     <div class="p-2" *ngIf="isVisible">
@@ -63,7 +64,7 @@
                             <option *ngFor="let product of listProduct" value="{{product.id}}">{{product.name}}</option>
                         </select>
                     </div>
-                    
+
                 </div>
                 <div class="p-2 col-md-2">
                     <button type="button" class="btn btn-primary mb-3" (click)="findOrder()">Search</button>
@@ -87,22 +88,28 @@
             </thead>
 
             <tbody>
-                <tr
-                    *ngFor="let order of orders | paginate: {  itemsPerPage: limit, currentPage: page, totalItems: count}; let i = index">
-                    <th scope="col">{{order.id}}</th>
-                    <th scope="col">{{order.name}}</th>
-                    <th scope="col">{{order.fullName}}</th>
-                    <th scope="col">{{order.staffName}}</th>
-                    <th scope="col">{{convertStringStatus(options, order.status)}}</th>
-                    <th scope="col">{{order.created_at * 1000 | date:'MMM d, y, h:mm:ss a'}}</th>
-                    <th scope="col">{{order.updated_at * 1000 | date:'MMM d, y, h:mm:ss a'}}</th>
-                    <th scope="col text-center">
-                        <button type="button" class="btn btn-success" (click)="displayOrder(order.id)">View</button>
-                        <button type="button" class="btn btn-primary" (click)="editOrder(order)">Update</button>
-                        <button type="button" class="btn btn-danger" (click)="deleteOrder(order.id)">Delete</button>
-                    </th>
+                <ng-container>
 
-                </tr>
+                    <tr *ngIf="!orders"> No find data</tr>
+                </ng-container>
+                <ng-container *ngIf="orders">
+                    <tr
+                        *ngFor="let order of orders | paginate: {  itemsPerPage: limit, currentPage: page, totalItems: count}; let i = index">
+                        <th scope="col">{{order.id}}</th>
+                        <th scope="col">{{order.name}}</th>
+                        <th scope="col">{{order.fullName}}</th>
+                        <th scope="col">{{order.staffName}}</th>
+                        <th scope="col">{{convertStringStatus(options, order.status)}}</th>
+                        <th scope="col">{{order.created_at * 1000 | date:'MMM d, y, h:mm:ss a'}}</th>
+                        <th scope="col">{{order.updated_at * 1000 | date:'MMM d, y, h:mm:ss a'}}</th>
+                        <th scope="col text-center">
+                            <button type="button" class="btn btn-success" (click)="displayOrder(order.id)">View</button>
+                            <button type="button" class="btn btn-primary" (click)="editOrder(order)">Update</button>
+                            <button type="button" class="btn btn-danger" (click)="deleteOrder(order.id)">Delete</button>
+                        </th>
+
+                    </tr>
+                </ng-container>
             </tbody>
         </table>
         <div class="d-flex justify-content-center">

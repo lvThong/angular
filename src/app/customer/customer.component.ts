@@ -4,6 +4,7 @@ import {FormBuilder} from "@angular/forms";
 import {NgbModal} from "@ng-bootstrap/ng-bootstrap";
 import {NotificationService} from "../services/notification.service";
 import {PopupComponent} from "../popup/popup.component";
+import { ModalDeleteComponent } from '../modal-delete/modal-delete.component';
 
 @Component({
   selector: 'app-customer',
@@ -103,14 +104,25 @@ export class CustomerComponent {
 
   }
   deleteCustomer(id: number) {
-    this.customerService.deleteCustomer(id).subscribe(
-      res => {
-        if (res.status === 'success') {
-          this.notifi.showSuccess('success', 'deleted customer');
-        } else {
-          this.notifi.showError('failure', 'deleted customer');
-        }
-        this.getListcustomer();
+    const modalRef = this.modalService.open(ModalDeleteComponent, {size: 'sm', backdrop: 'static'});
+    modalRef.componentInstance.title = 'Delete this customer';
+    modalRef.result.then(
+      result => {
+        this.customerService.deleteCustomer(id).subscribe(
+          res => {
+            if (res.status === 'success') {
+              this.notifi.showSuccess('success', 'deleted customer');
+              this.getListcustomer();
+            } else {
+              this.notifi.showError('failure', 'deleted customer');
+            }
+          
+          }
+        )
+      }, 
+      reason => {
+
+
       }
     )
   }

@@ -7,6 +7,7 @@ import { NotificationService } from '../services/notification.service';
 import { Router } from '@angular/router';
 import { ProductService } from '../services/product.service';
 import { CategoryService } from '../services/category.service';
+import { ModalDeleteComponent } from '../modal-delete/modal-delete.component';
 
 @Component({
   selector: 'app-order',
@@ -90,7 +91,7 @@ export class OrderComponent {
   }
   getListOrderInit() {
     let params = {
-      page:  this.page,
+      page: this.page,
       limit: this.limit
     }
     this.orderService.getListDetailOrder(params).subscribe(
@@ -114,10 +115,10 @@ export class OrderComponent {
     let { id, name, status, customerName, customerAddress, customerEmail, customerPhoneNumber, productId, userName } = this.filterForm.value;
     let params = {
       orderId: id, orderName: name, status,
-      fullName: customerName, email: customerEmail, address: customerAddress, phoneNumber: customerPhoneNumber,userName,
+      fullName: customerName, email: customerEmail, address: customerAddress, phoneNumber: customerPhoneNumber, userName,
       productId, page: this.page, limit: this.limit
     };
-   
+
     this.orderService.getListDetailOrder(params).subscribe(
       res => {
         if (res.status === 'success') {
@@ -127,9 +128,15 @@ export class OrderComponent {
           // let keys = Object.keys(data);
           for (let index in data) {
             result = [...result, data[index][0]];
+          } 
+          if (data.length == 0) {
+            this.orders = false;
+            this.count = 0;
+            // console.log(this.orders, this.count, this.page);
+          } else {
+            this.orders = result;
+            this.count = res.data.total;
           }
-          this.orders = result;
-          this.count = res.data.total;
         }
       }
     )
@@ -162,15 +169,25 @@ export class OrderComponent {
     this.router.navigate(['update-order', { id: JSON.stringify(order.id) }]);
   }
   deleteOrder(id: number) {
-    this.orderService.deleteOrder(id).subscribe(
-      res => {
-        if (res.status === 'success') {
-          this.notifi.showSuccess('success', 'Deleted order');
-        } else {
-          this.notifi.showError('error', 'No delete order')
-        }
+    const modalRef = this.modalService.open(ModalDeleteComponent, { size: 'sm', backdrop: 'static'});
+    modalRef.componentInstance.title = 'Delete this order';
+    modalRef.result.then(
+      result => {
+        this.orderService.deleteOrder(id).subscribe(
+          res => {
+            if (res.status === 'success') {
+              this.notifi.showSuccess('success', 'Deleted order');
+    
+              this.getListOrder();
+            } else {
+              this.notifi.showError('error', 'No delete order')
+            }
+    
+          }
+        )
+      },
+      reason => {
 
-        this.getListOrder();
       }
     )
   }

@@ -4,6 +4,8 @@ import { FormBuilder } from '@angular/forms';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { PopupComponent } from '../popup/popup.component';
 import { NotificationService } from '../services/notification.service';
+import { ModalDeleteComponent } from '../modal-delete/modal-delete.component';
+import { ResourceLoader } from '@angular/compiler';
 
 @Component({
   selector: 'app-user',
@@ -28,7 +30,7 @@ export class UserComponent {
   }
   ngOnInit() {
     this.getRole();
-    this.getListUser();
+    this.getListUserInit();
     this.createForm();
   }
   createForm() {
@@ -40,7 +42,7 @@ export class UserComponent {
       role: [null]
     });
   }
-  getListUser() {
+  getListUserInit() {
     let params = {
       page: this.page,
       limit: this.limit
@@ -50,6 +52,28 @@ export class UserComponent {
         if (res.status === 'success') {
           this.users = res.data.data;
           this.count = res.data.total;
+        }
+      }
+    )
+  }
+  getListUser() {
+
+    let { id, name, phoneNumber, address, role } = this.filterForm.value;
+    let params = {
+      page: this.page,
+      limit: this.limit,
+      id,
+      name,
+      phoneNumber,
+      address,
+      role
+    }
+    this.userService.listUser(params).subscribe(
+      res => {
+        if (res.status === 'success') {
+          this.users = res.data.data;
+          this.count = res.data.total;
+
         }
       }
     )
@@ -70,25 +94,7 @@ export class UserComponent {
     this.getListUser();
   }
   findUser() {
-    let { id, name, phoneNumber, address, role } = this.filterForm.value;
-    let params = {
-      page: this.page,
-      limit: this.limit,
-      id,
-      name,
-      phoneNumber,
-      address,
-      role
-    }
-    this.userService.listUser(params).subscribe(
-      res => {
-        if (res.status === 'success') {
-          this.users = res.data.data;
-          this.count = res.data.total;
-
-        }
-      }
-    )
+    this.getListUser();
   }
 
   createUser() {
@@ -116,17 +122,26 @@ export class UserComponent {
 
   }
   deleteUser(id: number) {
-    this.userService.deleteUser(id).subscribe(
-      res => {
-        if (res.status === 'success') {
-          this.notifi.showSuccess('success', 'deleted user');
-        } else {
-          this.notifi.showError('failure', 'deleted user');
-        }
-        this.getListUser();
+    let modalRef = this.modalService.open(ModalDeleteComponent, { size: 'sm', backdrop: 'static' });
+    modalRef.componentInstance.title = 'Delete User ?';
+    modalRef.result.then(
+      result => {
+        this.userService.deleteUser(id).subscribe(
+          res => {
+            if (res.status === 'success') {
+              this.notifi.showSuccess('success', 'deleted user');
+            } else {
+              this.notifi.showError('failure', 'deleted user');
+            }
+            this.getListUser();
+          }
+        )
+      }
+      ,
+      reason => {
+
       }
     )
   }
-
 
 }

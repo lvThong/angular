@@ -6,6 +6,7 @@ import { FormBuilder, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { EditProductComponent } from '../edit-product/edit-product.component';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { NotificationService } from '../services/notification.service';
+import { ModalDeleteComponent } from '../modal-delete/modal-delete.component';
 @Component({
   selector: 'app-products',
   templateUrl: './products.component.html',
@@ -31,7 +32,7 @@ export class ProductsComponent {
   ngOnInit() {
     this.getCategories();
     this.createForm();
-    this.getProducts(this.page, this.limit);
+    this.getProducts();
 
 
   }
@@ -63,7 +64,7 @@ export class ProductsComponent {
   //   );
 
   // }
-  getProducts(page: number, limit: number) {
+  getProducts() {
     const { id, name, category } = this.filterForm.value;
     this.productService.findProduct(id, name, category, this.page, this.limit)
       .subscribe((res) => {
@@ -78,20 +79,31 @@ export class ProductsComponent {
     //  console.log(listProducts);
   }
   deleteProduct(id: number) {
-    this.productService.deleteProduct(id)
-      .subscribe(
-        res => {
-          if (res.status === 'success') {
-            this.getProducts(this.page, this.limit);
-            // alert('delete success');
-            this.notification.showSuccess('delete sucess', 'Product');
-            // this.router.navigate(['/product']); 
+    const modalRef = this.modalService.open(ModalDeleteComponent, { size: 'sm', backdrop: 'static' });
+    modalRef.componentInstance.title = 'Delete this product';
+    modalRef.result.then(
+      result => {
+        this.productService.deleteProduct(id)
+          .subscribe(
+            res => {
+              if (res.status === 'success') {
+                this.getProducts();
+                // alert('delete success');
+                this.notification.showSuccess('Sucess', 'Product');
+                // this.router.navigate(['/product']); 
 
-          }
+              } else {
+                this.notification.showError('Failure', 'No delete product');
+              }
 
 
-        }
-      );
+            }
+          );
+      },
+      reason => {
+
+      }
+    )
   }
   editProduct(product: any) {
     // this.editProductComponent.open(product);
@@ -118,21 +130,22 @@ export class ProductsComponent {
   }
   handlePage(event: any) {
     this.page = event;
-    this.getProducts(this.page, this.limit);
+    this.getProducts();
   }
   findProduct() {
-    const { id, name, category } = this.filterForm.value;
-    this.productService.findProduct(id, name, category, this.page, this.limit).subscribe(
-      (res) => {
-        if (res.status === 'success') {
-          this.products = res.data.data;
-          this.count = res.data.total;
-          // this.router.navigate(['/product']);   
-        }
+    this.getProducts();
+  //   const { id, name, category } = this.filterForm.value;
+  //   this.productService.findProduct(id, name, category, this.page, this.limit).subscribe(
+  //     (res) => {
+  //       if (res.status === 'success') {
+  //         this.products = res.data.data;
+  //         this.count = res.data.total;
+  //         // this.router.navigate(['/product']);   
+  //       }
 
 
-      }
-    )
+  //     }
+  //   )
   }
 
 }
